@@ -1,0 +1,390 @@
+button.css-1x8cf1d.edgvbvh10 {
+  background-color: rgb(112, 103, 243);
+  border: 2px solid white;
+  color: white;
+  font-size: 16px;
+  padding: 2% 3% 3% 3%;
+  border-radius: 5px;
+
+}
+
+/* Style inputs with type="text", type="email"and textareas */
+input[type=text], input[type=email], textarea {
+  width: 100%; /* Full width */
+  padding: 8px; /* Some padding */ 
+  border: 1px solid #ffffff; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 12px; /* Bottom margin */
+  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* Style the submit button with a specific background color etc */
+button[type=submit] {
+  background-color: rgb(112, 103, 243);
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+/* When moving the mouse over the submit button, add a darker green color */
+button[type=submit]:hover {
+  background-color: #00cf67;
+}
+
+/* div.css-52v4ru.e1tzin5v2 {
+  background-color: #1F3D7C;
+} */
+
+
+div.appview-container.css-1wrcr25.egzxvld6
+{background-color: white;}
+section.main.css-k1vhr4.egzxvld5{
+  background-color: #ffffff;
+}
+
+div.element-container.css-1nee1hp.e1tzin5v3{
+  background-color: #ffffff;
+}
+div.element-container.css-12fxzqp.e1tzin5v3{
+  background-color: #ffffff;
+}
+span.css-10trblm.e16nr0p30{
+  color: #201f1f;
+  font-style: #201f1f;
+}
+div.css-184tjsw.e16nr0p34{
+  color: #201f1f;
+  font-style: #201f1f;
+  font-size: 30px;
+}
+div.css-81oif8.effi0qh3{
+  color: #201f1f;
+  font-style: #201f1f;
+  padding: 0% 0% 0% 0%;
+}
+body{
+  color: #201f1f;
+  font-style: #201f1f;
+}
+center{
+  color: #201f1f;
+  font-style: #201f1f;
+}
+body {
+  background-color: #1F3D7C;
+}
+
+div[role="listbox"] ul {
+  background-color: #06BBCC;
+}
+div[role="generic"] ul {
+  background-color: #06BBCC;
+}
+
+
+/* st-bk st-c5 st-c6 st-c7 st-c8 st-c9 st-ca st-cb st-cc st-cd st-ce st-b8 st-cf st-cg st-ch st-ci st-cj st-ck st-cl st-cm st-ae st-af st-ag st-cn st-ai st-aj st-c4 st-co st-cp st-cq st-cr st-cs st-ct */
+textarea.st-bk.st-c5.st-c6.st-c7.st-c8.st-c9.st-ca.st-cb.st-cc.st-cd.st-ce.st-b8.st-cf.st-cg.st-ch.st-ci.st-cj.st-ck.st-cl.st-cm.st-ae.st-af.st-ag.st-cn.st-ai.st-aj.st-c4.st-co.st-cp.st-cq.st-cr.st-cs.st-ct{
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+textarea.st-bn.st-c8.st-c9.st-ca.st-cb.st-cc.st-cd.st-ce.st-cf.st-cg.st-ch.st-b8.st-ci.st-cj.st-ck.st-cl.st-cm.st-cn.st-co.st-cp.st-ae.st-af.st-ag.st-cq.st-ai.st-aj.st-c7.st-cr.st-cs.st-ct.st-cu.st-cv.st-cw {
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+textarea.st-bi.st-c3.st-c4.st-c5.st-c6.st-c7.st-c8.st-c9.st-ca.st-cb.st-cc.st-b8.st-cd.st-ce.st-cf.st-cg.st-ch.st-ci.st-cj.st-ck.st-ae.st-af.st-ag.st-cl.st-ai.st-aj.st-c2.st-cm.st-cn.st-co.st-cp.st-cq.st-cr {
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+} 
+
+textarea.st-bl.st-c6.st-c7.st-c8.st-c9.st-ca.st-cb.st-cc.st-cd.st-ce.st-cf.st-b8.st-cg.st-ch.st-ci.st-cj.st-ck.st-cl.st-cm.st-cn.st-ae.st-af.st-ag.st-co.st-ai.st-aj.st-c5.st-cp.st-cq.st-cr.st-cs.st-ct.st-cu {
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+textarea.st-bo.st-c9.st-ca.st-cb.st-cc.st-cd.st-ce.st-cf.st-cg.st-ch.st-ci.st-b8.st-cj.st-ck.st-cl.st-cm.st-cn.st-co.st-cp.st-cq.st-ae.st-af.st-ag.st-cr.st-ai.st-aj.st-c8.st-cs.st-ct.st-cu.st-cv.st-cw.st-cx {
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+textarea.st-bm.st-c7.st-c8.st-c9.st-ca.st-cb.st-cc.st-cd.st-ce.st-cf.st-cg.st-b8.st-ch.st-ci.st-cj.st-ck.st-cl.st-cm.st-cn.st-co.st-ae.st-af.st-ag.st-cp.st-ai.st-aj.st-c6.st-cq.st-cr.st-cs.st-ct.st-cu.st-cv{
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+textarea.st-bp.st-ca.st-cb.st-cc.st-cd.st-ce.st-cf.st-cg.st-ch.st-ci.st-cj.st-b8.st-ck.st-cl.st-cm.st-cn.st-co.st-cp.st-cq.st-cr.st-ae.st-af.st-ag.st-cs.st-ai.st-aj.st-c9.st-ct.st-cu.st-cv.st-cw.st-cx.st-cy {
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+textarea.st-bh.st-c2.st-c3.st-c4.st-c5.st-c6.st-c7.st-c8.st-c9.st-ca.st-cb.st-b8.st-cc.st-cd.st-ce.st-cf.st-cg.st-ch.st-ci.st-cj.st-ae.st-af.st-ag.st-ck.st-ai.st-aj.st-c1.st-cl.st-cm.st-cn.st-co.st-cp.st-cq {
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+textarea.st-bj.st-c4.st-c5.st-c6.st-c7.st-c8.st-c9.st-ca.st-cb.st-cc.st-cd.st-b8.st-ce.st-cf.st-cg.st-ch.st-ci.st-cj.st-ck.st-cl.st-ae.st-af.st-ag.st-cm.st-ai.st-aj.st-c3.st-cn.st-co.st-cp.st-cq.st-cr.st-cs {
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+  font-size: 5px;
+}
+textarea.st-bo.st-cp.st-do.st-dp.st-dq.st-dr.st-cq.st-cs.st-cr.st-ct.st-cu.st-b8.st-ds.st-ck.st-br.st-dt.st-du.st-dv.st-dw.st-dx.st-ae.st-af.st-ag.st-bn.st-ai.st-aj.st-c2.st-dy.st-dz.st-e0.st-e1.st-e2.st-e3 {
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+  font-size: 5px;
+}
+section.css-po3vlj.exg6vvm15{
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 4.2% 2.9% 2.9% 4.2%;
+  border-radius: 5px;
+}
+div.st-au.st-ax.st-av.st-aw.st-bi.st-bj.st-b8.st-b3.st-b4.st-cf.st-cz.st-d0.st-d1.st-d2.st-bo.st-bp.st-bq.st-br.st-d3.st-b1.st-bt.st-c2.st-bu.st-bv.st-bw.st-bx.st-by{
+  background-color: #1F3D7C;
+  border: 2px solid #C2DFFF;
+  color: white;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+div.st-au.st-ax.st-av.st-aw.st-bo.st-bq.st-b8.st-b3.st-b4.st-br.st-bs.st-bt.st-bu.st-bv.st-bw.st-bx.st-by.st-bz.st-c0.st-b1.st-c1.st-c2.st-c3.st-c4.st-c5.st-c6.st-c7 {
+  background-color: #1F3D7C;
+  border: 2px solid #C2DFFF;
+  color: white;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+div.st-au.st-ax.st-av.st-aw.st-bo.st-bp.st-b8.st-b3.st-b4.st-cl.st-cz.st-d0.st-d1.st-d2.st-bu.st-bv.st-bw.st-bx.st-d3.st-b1.st-bz.st-c8.st-c0.st-c1.st-c2.st-c3.st-c4 {
+  background-color: #1F3D7C;
+  border: 2px solid #C2DFFF;
+  color: white;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+div.st-au.st-ax.st-av.st-aw.st-bm.st-bn.st-b8.st-b3.st-b4.st-cj.st-cx.st-cy.st-cz.st-d0.st-bs.st-bt.st-bu.st-bv.st-d1.st-b1.st-bx.st-c6.st-by.st-bz.st-c0.st-c1.st-c2 {
+  background-color: #1F3D7C;
+  border: 2px solid #C2DFFF;
+  color: white;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+div.st-au.st-ax.st-av.st-aw.st-bi.st-bj.st-b8.st-b3.st-b4.st-cf.st-ct.st-cu.st-cv.st-cw.st-bo.st-bp.st-bq.st-br.st-cx.st-b1.st-bt.st-c2.st-bu.st-bv.st-bw.st-bx.st-by {
+  background-color: #1F3D7C;
+  border: 2px solid #C2DFFF;
+  color: white;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+div.st-au.st-ax.st-av.st-aw.st-bp.st-bq.st-b8.st-b3.st-b4.st-cm.st-d0.st-d1.st-d2.st-d3.st-bv.st-bw.st-bx.st-by.st-d4.st-b1.st-c0.st-c9.st-c1.st-c2.st-c3.st-c4.st-c5 {
+  background-color: #1F3D7C;
+  border: 2px solid #C2DFFF;
+  color: white;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+div.st-au.st-ax.st-av.st-aw.st-bn.st-bo.st-b8.st-b3.st-b4.st-ck.st-cy.st-cz.st-d0.st-d1.st-bt.st-bu.st-bv.st-bw.st-d2.st-b1.st-by.st-c7.st-bz.st-c0.st-c1.st-c2.st-c3 {
+  background-color: #1F3D7C;
+  border: 2px solid #C2DFFF;
+  color: white;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+
+button.css-pg12qu.edgvbvh10{
+  background-color: #C2DFFF;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 3% 3% 3% 3%;
+  border-radius: 5px;
+}
+section.css-2ho5o1.exg6vvm15{
+  background-color: #C2DFFF;
+  border: 2px solid #1F3D7C;
+  color: white;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+div.dvn-scroller.glideDataEditor{
+  color:#06BBCC;
+  font-style: #353131;
+}
+div.css-1fttcpj.exg6vvm11{
+  color: #353131;
+}
+small.css-7oyrr6.euu6i2w0{
+  color: #353131;
+}
+p{
+  color:#353131;
+  
+}
+li{
+  color: #353131;
+}
+button.css-pg12qu.edgvbvh10 {
+  background-color: white;
+  border: 2px solid #06BBCC;
+  color: #353131;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+div.st-de.st-dr.st-c3.st-ae.st-af.st-ag.st-ah.st-ai.st-aj.st-ds.st-dt {
+  background-color: white;
+  color: #353131;
+}
+pre.css-s37696.e10mrw3y3{
+  background-color: #1F3D7C;
+  border: 2px solid #06BBCC;
+  color: white;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+div.st-au.st-ax.st-av.st-aw.st-bk.st-bl.st-b8.st-b3.st-b4.st-ch.st-cv.st-cw.st-cx.st-cy.st-bq.st-br.st-bs.st-bt.st-cz.st-b1.st-bv.st-c4.st-bw.st-bx.st-by.st-bz.st-c0 {
+  background-color: #5c5d60;
+  border: 2px solid #06BBCC;
+  color: white;
+  padding: 1% 1% 1% 1%;
+  border-radius: 5px;
+}
+div.st-au.st-ax.st-av.st-aw.st-bk.st-bl.st-b8.st-b3.st-b4.st-ch.st-cv.st-cw.st-cx.st-cy.st-bq.st-br.st-bs.st-bt.st-cz.st-b1.st-bv.st-c4.st-bw.st-bx.st-by.st-bz.st-c0 {
+  background-color: #12204a;
+  border: 2px solid #06BBCC;
+  color: white;
+  padding: 1% 2% 2% 2%;
+  border-radius: 5px;
+}
+div.st-au.st-ax.st-av.st-aw.st-bl.st-bm.st-b8.st-b3.st-b4.st-ci.st-cw.st-cx.st-cy.st-cz.st-br.st-bs.st-bt.st-bu.st-d0.st-b1.st-bw.st-c5.st-bx.st-by.st-bz.st-c0.st-c1 {
+  background-color: #12204a;
+  border: 2px solid #06BBCC;
+  color: white;
+  padding: 1% 2% 2% 2%;
+  border-radius: 5px;
+}
+
+
+div.css-183lzff.eyqtai90{
+  color: #353131;
+}
+
+pre.css-1qcggol.e10mrw3y3 {
+  background-color: #1F3D7C;
+  border: 2px solid #06BBCC;
+  color: white;
+  padding: 1% 3% 3% 3%;
+  border-radius: 5px;
+}
+div.css-ocqkz7.e1tzin5v4 {
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+ 
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+button[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div.streamlit-expanderHeader.st-ae.st-df.st-ag.st-ah.st-ai.st-aj.st-c4.st-dg.st-c5.st-dh.st-di.st-cl.st-cm.st-ar.st-as.st-b6.st-b5.st-b3.st-dj.st-ce.st-dk.st-b4.st-dl.st-cc.st-cd.st-cb.st-ca{
+  background-color: #C2DFFF;
+  border: 2px solid #D1F0FF;
+  color: rgb(0, 0, 0);
+  padding: 0.5% 0.5% 0.5% 0.5%;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+}
+
+div.streamlit-expanderHeader.st-ae.st-f3.st-ag.st-ah.st-ai.st-aj.st-c4.st-eh.st-c5.st-fs.st-ft.st-cl.st-cm.st-ar.st-as.st-b6.st-b5.st-b3.st-d3.st-ce.st-fu.st-b4.st-fv.st-cc.st-cd.st-cb.st-ca {
+  background-color: #C2DFFF;
+  border: 2px solid #D1F0FF;
+  color: rgb(0, 0, 0);
+  padding: 0.5% 0.5% 0.5% 0.5%;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+}
+
+div.streamlit-expanderHeader.st-ae.st-ep.st-ag.st-ah.st-ai.st-aj.st-c4.st-eq.st-c5.st-er.st-es.st-cl.st-cm.st-ar.st-as.st-b6.st-b5.st-b3.st-d3.st-ce.st-et.st-b4.st-eu.st-cc.st-cd.st-cb.st-ca {
+  background-color: #C2DFFF;
+  border: 2px solid #D1F0FF;
+  color: rgb(0, 0, 0);
+  padding: 0.5% 0.5% 0.5% 0.5%;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+}
+
+div.streamlit-expanderHeader.st-ae.st-ep.st-ag.st-ah.st-ai.st-aj.st-c6.st-eq.st-c7.st-er.st-es.st-cn.st-co.st-ar.st-as.st-b6.st-b5.st-b3.st-d5.st-cg.st-et.st-b4.st-eu.st-ce.st-cf.st-cd.st-cc {
+  background-color: #C2DFFF;
+  border: 2px solid #D1F0FF;
+  color: rgb(0, 0, 0);
+  padding: 0.5% 0.5% 0.5% 0.5%;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+}
+div.streamlit-expanderHeader.st-ae.st-fd.st-ag.st-ah.st-ai.st-aj.st-c2.st-el.st-c3.st-fe.st-ff.st-cj.st-ck.st-ar.st-as.st-b6.st-b5.st-b3.st-d7.st-cc.st-fg.st-b4.st-fh.st-ca.st-cb.st-c9.st-c8 {
+  background-color: #C2DFFF;
+  border: 2px solid #D1F0FF;
+  color: rgb(0, 0, 0);
+  padding: 0.5% 0.5% 0.5% 0.5%;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+}
+div.streamlit-expanderHeader.st-ae.st-et.st-ag.st-ah.st-ai.st-aj.st-c8.st-eu.st-c9.st-ev.st-ew.st-cp.st-cq.st-ar.st-as.st-b6.st-b5.st-b3.st-d7.st-ci.st-ex.st-b4.st-ey.st-cg.st-ch.st-cf.st-ce {
+  background-color: #C2DFFF;
+  border: 2px solid #D1F0FF;
+  color: rgb(0, 0, 0);
+  padding: 0.5% 0.5% 0.5% 0.5%;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+}
+div.streamlit-expanderHeader.st-ae.st-eo.st-ag.st-ah.st-ai.st-aj.st-c5.st-ep.st-c6.st-eq.st-er.st-cm.st-cn.st-ar.st-as.st-b6.st-b5.st-b3.st-d4.st-cf.st-es.st-b4.st-et.st-cd.st-ce.st-cc.st-cb {
+  background-color: #C2DFFF;
+  border: 2px solid #D1F0FF;
+  color: rgb(0, 0, 0);
+  padding: 0.5% 0.5% 0.5% 0.5%;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+}
+
+div.streamlit-expanderHeader.st-ae.st-el.st-ag.st-ah.st-ai.st-aj.st-c2.st-em.st-c3.st-en.st-eo.st-cj.st-ck.st-ar.st-as.st-b6.st-b5.st-b3.st-d1.st-cc.st-ep.st-b4.st-eq.st-ca.st-cb.st-c9.st-c8 {
+  background-color: #C2DFFF;
+  border: 2px solid #D1F0FF;
+  color: rgb(0, 0, 0);
+  padding: 0.5% 0.5% 0.5% 0.5%;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+}
+div.streamlit-expanderHeader.st-ae.st-es.st-ag.st-ah.st-ai.st-aj.st-c9.st-et.st-ca.st-eu.st-ev.st-cq.st-cr.st-ar.st-as.st-b6.st-b5.st-b3.st-d8.st-cj.st-ew.st-b4.st-ex.st-ch.st-ci.st-cg.st-cf {
+  background-color: #C2DFFF;
+  border: 2px solid #D1F0FF;
+  color: rgb(0, 0, 0);
+  padding: 0.5% 0.5% 0.5% 0.5%;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+}
