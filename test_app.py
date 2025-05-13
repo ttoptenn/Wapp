@@ -40,10 +40,10 @@ if __name__ == '__main__':
 
         app.add_app("Home", icon="🏠", app=home.HomeApp(title='Home'), is_home=True)
         app.add_app("Predict", icon="🔍", app=predict.PredictApp(title='Predict'))
+        app.add_app("Predict your peptide", icon="🔍", app=predict.PredictApp(title="Predict"))
         # app.add_app("Home", icon="🏠", app=apps.HomeApp(title='Home'),is_home=True)
 
         #add all application classes
-        app.add_app("Predict your peptide", icon="🔍", app=apps.PredictApp(title="Predict your peptide"))
         app.add_app("How to use web application", icon="❓", app=apps.HowtoApp(title="How to use web application"))
         app.add_app("Dashboard", icon="far fa-chart-bar", app=apps.DashbApp(title="Dashboard"))
         app.add_app("Intro", icon="🏆", app=apps.IntroApp(title="About us"))
