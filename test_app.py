@@ -8,7 +8,7 @@ from apps import (
     dashb_app,
     intro_app_new,
     member_app,
-    contact_us_new
+    ContactUsApp
 )
 import apps.HowToApp as how_to_app
 import streamlit as st
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         app.add_app("Dashboard", icon="📊", app=dashb_app.DashbApp(title="Dashboard"))
         app.add_app("Intro", icon="🥂", app=intro_app_new.IntroApp(title="About us"))
         app.add_app("Member", icon="🧑‍💼", app=member_app.MemberApp(title="Member"))
-        app.add_app("Contact us", icon="📧", app=contact_us_new.ContactUsApp(title="Contact us"))
+        app.add_app("Contact us", icon="📧", app=ContactUsApp.ContactUsApp(title="Contact us"))
 
         #check access
         username = app.check_access()
