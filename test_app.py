@@ -2,6 +2,7 @@
 from hydralit import HydraApp
 import hydralit_components as hc
 import apps
+from apps import home, predict
 import streamlit as st
 from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
@@ -35,7 +36,11 @@ if __name__ == '__main__':
         with open('style2.css') as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
         #Home button will be in the middle of the nav list now
-        app.add_app("Home", icon="🏠", app=apps.HomeApp(title='Home'),is_home=True)
+         
+
+        app.add_app("Home", icon="🏠", app=home.HomeApp(title='Home'), is_home=True)
+        app.add_app("Predict", icon="🔍", app=predict.PredictApp(title='Predict'))
+        # app.add_app("Home", icon="🏠", app=apps.HomeApp(title='Home'),is_home=True)
 
         #add all application classes
         app.add_app("Predict your peptide", icon="🔍", app=apps.PredictApp(title="Predict your peptide"))
