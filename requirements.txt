@@ -8,6 +8,7 @@ joblib
 beautifulsoup4
 altair==4.1.0
 biopython==1.78
+modlamp==4.3.0
 statsmodels==0.13.5
 streamlit==1.18.1
 streamlit-aggrid==0.3.3
