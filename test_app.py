@@ -2,7 +2,15 @@
 from hydralit import HydraApp
 import hydralit_components as hc
 import apps
-from apps import home, predict
+from apps import (
+    home,
+    predict,
+    Howto_app,
+    dashb_app,
+    intro_app_new,
+    member_app,
+    contact_us_new
+)
 import streamlit as st
 from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
@@ -39,16 +47,15 @@ if __name__ == '__main__':
          
 
         app.add_app("Home", icon="🏠", app=home.HomeApp(title='Home'), is_home=True)
-        app.add_app("Predict", icon="🔍", app=predict.PredictApp(title='Predict'))
+        app.add_app("Predict", icon="🔬", app=predict.PredictApp(title='Predict'))
         app.add_app("Predict your peptide", icon="🔍", app=predict.PredictApp(title="Predict"))
-        # app.add_app("Home", icon="🏠", app=apps.HomeApp(title='Home'),is_home=True)
 
-        #add all application classes
-        app.add_app("How to use web application", icon="❓", app=apps.HowtoApp(title="How to use web application"))
-        app.add_app("Dashboard", icon="far fa-chart-bar", app=apps.DashbApp(title="Dashboard"))
-        app.add_app("Intro", icon="🏆", app=apps.IntroApp(title="About us"))
-        app.add_app("Member", icon="👩‍🏫", app=apps.MemberApp(title="Member"))
-        app.add_app("Contact us", icon="📧", app=apps.ContactUsAPP(title="Contact us"))
+        # add all application classes
+        app.add_app("How to use web application", icon="❓", app=Howto_app.HowToApp(title="How to use web application"))
+        app.add_app("Dashboard", icon="📊", app=dashb_app.DashbApp(title="Dashboard"))
+        app.add_app("Intro", icon="🥂", app=intro_app_new.IntroApp(title="About us"))
+        app.add_app("Member", icon="🧑‍💼", app=member_app.MemberApp(title="Member"))
+        app.add_app("Contact us", icon="📧", app=contact_us_new.ContactUsApp(title="Contact us"))
 
         #check access
         username = app.check_access()
