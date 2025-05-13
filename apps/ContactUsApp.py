@@ -6,7 +6,7 @@ import requests
 # from hydralit_components import CookieManager
 
 
-class ContactUsAPP(HydraHeadApp):
+class ContactUsApp(HydraHeadApp):
 
     def __init__(self, title = 'Contact us', delay=0, **kwargs):
         # self.__dict__.update(kwargs)
