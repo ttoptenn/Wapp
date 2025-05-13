@@ -2,7 +2,7 @@ import streamlit as st
 from hydralit import HydraHeadApp
 
 # -------------------------------------------------------------------------------------------------------------------------------------
-class HowtoApp(HydraHeadApp):
+class HowToApp(HydraHeadApp):
 
     def __init__(self, title = 'How to use web application', **kwargs):
         # self.__dict__.update(kwargs)
