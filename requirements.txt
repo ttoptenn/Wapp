@@ -12,3 +12,5 @@ streamlit==1.18.1
 streamlit-aggrid==0.3.3
 streamlit-lottie==0.0.3
 streamlit-option-menu==0.3.2
+hydralit==1.0.14
+hydralit_components==1.0.10
