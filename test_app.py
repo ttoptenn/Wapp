@@ -5,7 +5,7 @@ import apps
 from apps import (
     home,
     predict,
-    Howto_app,
+    HowToApp,
     dashb_app,
     intro_app_new,
     member_app,
@@ -51,7 +51,7 @@ if __name__ == '__main__':
         app.add_app("Predict your peptide", icon="🔍", app=predict.PredictApp(title="Predict"))
 
         # add all application classes
-        app.add_app("How to use web application", icon="❓", app=Howto_app.HowToApp(title="How to use web application"))
+        app.add_app("How to use web application", icon="❓", app=HowToApp.HowToApp(title="How to use web application"))
         app.add_app("Dashboard", icon="📊", app=dashb_app.DashbApp(title="Dashboard"))
         app.add_app("Intro", icon="🥂", app=intro_app_new.IntroApp(title="About us"))
         app.add_app("Member", icon="🧑‍💼", app=member_app.MemberApp(title="Member"))
