@@ -53,7 +53,7 @@ class PredictApp(HydraHeadApp):
                 coss02.markdown(Ideal_datafa, unsafe_allow_html=True)
                 
                 st.write("##")
-                cd1,cd2, cd3 = st.columns((1,4,10))
+                cd1,cd2, cd3 = st.columns((1,4,9))
                 help_input="- Please enter your peptide sequence for prediction. \n- Please choose an input between FASTA text format or FASTA file format. \n- Sequence longer than 200 peptides should not be used as this may cause a delay in prediction."
                 Ideala = '<div align="left"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #1F3D7C; border-radius: 5px; text-align:center;">Please enter your peptide or upload file 👇</p>'
                 cd2.markdown(Ideala, unsafe_allow_html=True)
