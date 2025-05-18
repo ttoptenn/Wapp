@@ -15,7 +15,7 @@ class DashbApp(HydraHeadApp):
         st.title("Dashboard for data set")
                 #### import html ####
         
-        def st_webpage(page_html,width=1200,height=600):
+        def st_webpage(page_html,width=1190,height=600):
             page_file = codecs.open(page_html,'r')
             page =page_file.read()
             stc.html(page,width=width, height=height , scrolling = False)
