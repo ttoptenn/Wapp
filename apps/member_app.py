@@ -22,6 +22,6 @@ class MemberApp(HydraHeadApp):
 
         # footer
         # st.markdown("""---""")
-        st.image('resources/memb.png', width=1150, clamp=False, channels="RGB", output_format="auto")
+        st.image('resources/memb.png', width=1180, clamp=False, channels="RGB", output_format="auto")
 
     
