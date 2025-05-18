@@ -75,7 +75,7 @@ class PredictApp(HydraHeadApp):
                 
                 # clol02.write("1.Enter your Peptide 👇")                                                                                                                                                                                                                                                                                                                                                    
                 text_seq = clol02.text_area("",help=help_input)
-                clss1, clss2, clss3, clss4,clss5 = st.columns((2.05,4,2.5,2,0.55))
+                clss1, clss2, clss3, clss4,clss5 = st.columns((2,4,2.5,2,0.55))
                 data_file_uploader = clss2.file_uploader('', type=['FASTA','txt'], accept_multiple_files=False)    
                 if data_file_uploader is not None:
                     if data_file_uploader:
