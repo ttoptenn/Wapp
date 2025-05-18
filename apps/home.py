@@ -42,9 +42,9 @@ class HomeApp(HydraHeadApp):
             st_lottie(lottie2_codingss, height=230,  key="codvings")
             
             with st.container():
-                left_column1,left_column2,left_column3, right_column,right_column2 = st.columns((0.5,0.5,7,0.5,0.5))
+                left_column1,left_column2,left_column3, right_column,right_column2 = st.columns((0.5,1,6,1,0.5))
                 with left_column3:                  
-                    st.title(" 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠Web Application for Antimicrobial  󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠Peptide Prediction ")
+                    st.title(" 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠Web Application for Antimicrobial Peptide Prediction ")
                     # st.subheader("เว็บแอปพลิเคชันสำหรับการทำนายเพปไทด์ต้านจุลชีพ")
                     Ideal_title = '<p style="font-family:; color:#31333F; font-size: 28px; ">Web Application to test the antimicrobial peptide activity against bacteria.</p>'
                     # st.markdown(Ideal_title, unsafe_allow_html=True)
