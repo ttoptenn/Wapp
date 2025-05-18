@@ -34,7 +34,7 @@ class HowToApp(HydraHeadApp):
         st.write('##')
         Ideal_4 = '<div align="center"><p style="font-family:; color:#000000; font-size: 20px; background-color: #C2DFFF; border-radius: 5px;">Contact us page</p>'
         st.markdown(Ideal_4, unsafe_allow_html=True)
-        st.image('resources/webp4.png', width = 1100)
+        st.image('resources/contact_new.jpg', width = 1100)
         st.write('##')
         st.write('##')
         st.write('##')
