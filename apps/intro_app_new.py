@@ -52,7 +52,7 @@ class IntroApp(HydraHeadApp):
                 col_texta.markdown(I_intro2, unsafe_allow_html=True)
                 col_texta.image(os.path.join(".","resources","dataso.png"),width=700,)
 
-            aab1,aab2,aab3,aab4,aab5 = st.columns((14.8,3,4,4,2))
+            aab1,aab2,aab3,aab4,aab5 = st.columns((14,6,4,5,3))
             if aab2.button('DBAASP'):
                 self.do_redirect("https://dbaasp.org/home")
             if aab3.button('DRAMP'):
