@@ -172,7 +172,15 @@ class PredictApp(HydraHeadApp):
                         elif Sequence == 'two input' :
                             st.error('Please select only one input of peptides between FASTA text format or FASTA file format.') 
                         else:
+
+                            def load_model(model_file):
+                                model_path = os.path.join("models", model_file)
+                                if not os.path.exists(model_path):
+                                    st.error(f"❌ ไม่พบไฟล์โมเดล: {model_file}")
+                                    return None
+                                return joblib.load(model_path)
                             
+                            model_anti_or_non = load_model("model_gbc_resize_test.joblib")
                             # model---------------------------------------------------------------------------
                             model_anti_or_non = joblib.load('model_gbc_resize_test.joblib')
                             model_angram_negative = joblib.load('model_RF_fulldata_gram-.pkl')
