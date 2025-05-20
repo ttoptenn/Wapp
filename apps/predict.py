@@ -148,6 +148,10 @@ class PredictApp(HydraHeadApp):
                 cl001, ddd,cl002,cl003, cl004 = st.columns((0.95,3.8,2.5,4,16))  
                 if cl002.button("🦠 Predict"):
                     try:
+                        st.write("🚀 Predict button clicked")
+                        st.write("Text Input:", text_seq)
+                        st.write("File Input:", data_file_uploader)
+                    try:
                         if (text_seq != '') and (data_file_uploader is not None):                                                
                             Sequence = 'two input'
                         elif (text_seq != '') and (data_file_uploader is None):
