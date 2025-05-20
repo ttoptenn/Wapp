@@ -192,7 +192,7 @@ class PredictApp(HydraHeadApp):
                             model_angram_negative = joblib.load(model_path2)
                             st.success("✅ model_angram_negative loaded")
 
-                            model_path3 = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "model_RF_gramPos_resize_test.pkl"))
+                            model_path3 = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "model_RF_gramPos_resize_test.joblib"))
                             st.write("🔍 Loading model from:", model_path3)
                             model_angram_post = joblib.load(model_path3)
                             st.success("✅ model_angram_post loaded")
