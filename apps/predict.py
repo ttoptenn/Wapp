@@ -179,11 +179,12 @@ class PredictApp(HydraHeadApp):
                             model_angram_post = joblib.load('model_RF_gramPos_resize_test.joblib')
                             # input data list ----------------------------------------------------------------  
                             split_sequence = Sequence.split("\n")
+                            st.write(split_sequence)
                             list_clean_text = []
                             for i in range(len(split_sequence)):
                                 clean_text = " ".join([word for word in split_sequence[i].split()])
                                 list_clean_text.append(clean_text)
-                            st.write(list_clean_text)
+                                st.write(list_clean_text)
                                     
                             seq = []
                             name_seq = []
