@@ -148,6 +148,7 @@ class PredictApp(HydraHeadApp):
 
                 cl001, ddd,cl002,cl003, cl004 = st.columns((0.95,3.8,2.5,4,16))  
                 if cl002.button("🦠 Predict"):
+                    st.write("✅ Predict button clicked")
                     try:
                         if (text_seq != '') and (data_file_uploader is not None):                                               
                             Sequence = 'two input'
@@ -174,24 +175,29 @@ class PredictApp(HydraHeadApp):
                             st.error('Please select only one input of peptides between FASTA text format or FASTA file format.') 
                         else:
                             # model---------------------------------------------------------------------------
-                            # model_anti_or_non = os.path.join(os.path.dirname(__file__), "..", "model_gbc_resize_test.joblib")
-                            # model_anti_or_non = os.path.abspath(model_anti_or_non)  # แปลงเป็น path สมบูรณ์
-                            # # โหลดโมเดล
-                            # model_anti_or_non = joblib.load(model_anti_or_non)
-
-                            # model_angram_negative = os.path.join(os.path.dirname(__file__), "..", "model_RF_fulldata_gram-.pkl")
-                            # model_angram_negative = os.path.abspath(model_angram_negative)  # แปลงเป็น path สมบูรณ์
-                            # model_angram_negative = joblib.load(model_angram_negative)
-                            
-                            # model_angram_post = os.path.join(os.path.dirname(__file__), "..", "model_RF_gramPos_resize_test.joblib")
-                            # model_angram_post = os.path.abspath(model_angram_post)  # แปลงเป็น path สมบูรณ์
-                            # model_angram_post = joblib.load(model_angram_post)
 
 
-                            base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))  # ขึ้นไปนอกโฟลเดอร์ apps
-                            model_anti_or_non = joblib.load(os.path.join(base_path, "model_gbc_resize_test.joblib"))
-                            model_angram_negative = joblib.load(os.path.join(base_path, "model_RF_fulldata_gram-.pkl"))
-                            model_angram_post = joblib.load(os.path.join(base_path, "model_RF_gramPos_resize_test.joblib"))
+                            # base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))  # ขึ้นไปนอกโฟลเดอร์ apps
+                            # model_anti_or_non = joblib.load(os.path.join(base_path, "model_gbc_resize_test.joblib"))
+                            # model_angram_negative = joblib.load(os.path.join(base_path, "model_RF_fulldata_gram-.pkl"))
+                            # model_angram_post = joblib.load(os.path.join(base_path, "model_RF_gramPos_resize_test.joblib"))
+
+                            model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "model_gbc_resize_test.joblib"))
+                            st.write("🔍 Loading model from:", model_path)
+                            model_anti_or_non = joblib.load(model_path)
+                            st.success("✅ model_anti_or_non loaded")
+
+                            model_path2 = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "model_RF_fulldata_gram-.pkl"))
+                            st.write("🔍 Loading model from:", model_path2)
+                            model_angram_negative = joblib.load(model_path2)
+                            st.success("✅ model_angram_negative loaded")
+
+                            model_path3 = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "model_RF_gramPos_resize_test.pkl"))
+                            st.write("🔍 Loading model from:", model_path3)
+                            model_angram_post = joblib.load(model_path3)
+                            st.success("✅ model_angram_post loaded")
+
+                            # -------------------------------------------------------------------------------------------------
                             # model_anti_or_non = joblib.load('model_gbc_resize_test.joblib')
                             # model_angram_negative = joblib.load('model_RF_fulldata_gram-.pkl')
                             # model_angram_post = joblib.load('model_RF_gramPos_resize_test.joblib')
