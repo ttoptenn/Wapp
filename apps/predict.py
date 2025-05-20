@@ -178,8 +178,9 @@ class PredictApp(HydraHeadApp):
                             model_angram_negative = joblib.load('model_RF_fulldata_gram-.pkl')
                             model_angram_post = joblib.load('model_RF_gramPos_resize_test.joblib')
                             # input data list ----------------------------------------------------------------  
+                            st.write(Sequence)
                             split_sequence = Sequence.split("\n")
-                            st.write(split_sequence)
+                            
                             list_clean_text = []
                             for i in range(len(split_sequence)):
                                 clean_text = " ".join([word for word in split_sequence[i].split()])
