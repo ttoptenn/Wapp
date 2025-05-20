@@ -157,7 +157,6 @@ class PredictApp(HydraHeadApp):
                         elif (text_seq == '') and (data_file_uploader is None):
                             Sequence = ''
                         if Sequence == "" :
-                            st.write("eiei")
                             cffs1,cffs2,cffs3 = st.columns((0.96,12,0.65))
                             with cffs2:
                                 Ideal_er = '<div align="center"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #F75D59; border-radius: 5px;">**Peptide not found‼️ \n please input your peptide</p>'
@@ -1050,18 +1049,20 @@ class PredictApp(HydraHeadApp):
 
                                     
                     except:
-                        Ideal_err = '<div align="center"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #F75D59; border-radius: 5px;">Error peptide format!!</p>'
-                        st.markdown(Ideal_err, unsafe_allow_html=True)
-                        # st.error('Error format your peptide !!')
-                        Ideal_forexa = '<div align="left"><p style="font-sans-serif:; color: black; font-size: 15px; background-color: white; border-radius: 5px;">For example, input your peptide FASTA</p>'
-                        st.markdown(Ideal_forexa, unsafe_allow_html=True) 
-                        # st.write("For example, input your peptide FASTA format")                                  
-                        html_temp = """
-                                            <div style="background-color:#D1F0FF;padding:1px">
-                                            <h8 style="color:black;text-align:left;font-size:80%;"><u>Sample1</u><br>>Sequence_name1<br>DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW<br> 
-                                            <br><u>Sample2</u><br>>Sequence_name1<br>DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW<br>>Sequence_name2<br>FPFLLSLIPSAISALKKL </h1>
-                                            </div><br>"""
-                        st.markdown(html_temp,unsafe_allow_html=True)
+                        st.write(Sequence)
+                        st.write(text_seq)
+                        # Ideal_err = '<div align="center"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #F75D59; border-radius: 5px;">Error peptide format!!</p>'
+                        # st.markdown(Ideal_err, unsafe_allow_html=True)
+                        # # st.error('Error format your peptide !!')
+                        # Ideal_forexa = '<div align="left"><p style="font-sans-serif:; color: black; font-size: 15px; background-color: white; border-radius: 5px;">For example, input your peptide FASTA</p>'
+                        # st.markdown(Ideal_forexa, unsafe_allow_html=True) 
+                        # # st.write("For example, input your peptide FASTA format")                                  
+                        # html_temp = """
+                        #                     <div style="background-color:#D1F0FF;padding:1px">
+                        #                     <h8 style="color:black;text-align:left;font-size:80%;"><u>Sample1</u><br>>Sequence_name1<br>DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW<br> 
+                        #                     <br><u>Sample2</u><br>>Sequence_name1<br>DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW<br>>Sequence_name2<br>FPFLLSLIPSAISALKKL </h1>
+                        #                     </div><br>"""
+                        # st.markdown(html_temp,unsafe_allow_html=True)
 
                 elif cl003.button("❓ how to paste input"):
                     # st.write("For example, input your peptide FASTA format")
