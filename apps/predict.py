@@ -172,7 +172,7 @@ class PredictApp(HydraHeadApp):
                         elif Sequence == 'two input' :
                             st.error('Please select only one input of peptides between FASTA text format or FASTA file format.') 
                         else:
-                            st.write(Sequence)
+                            
                             # model---------------------------------------------------------------------------
                             model_anti_or_non = joblib.load('model_gbc_resize_test.joblib')
                             model_angram_negative = joblib.load('model_RF_fulldata_gram-.pkl')
@@ -183,7 +183,7 @@ class PredictApp(HydraHeadApp):
                             for i in range(len(split_sequence)):
                                 clean_text = " ".join([word for word in split_sequence[i].split()])
                                 list_clean_text.append(clean_text)
-                                st.write(list_clean_text)
+                            st.write(list_clean_text)
                                     
                             seq = []
                             name_seq = []
