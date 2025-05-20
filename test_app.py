@@ -8,8 +8,7 @@ from apps import (
     dashb_app,
     intro_app_new,
     member_app,
-    ContactUsApp
-)
+    ContactUsApp)
 import apps.HowToApp as how_to_app
 import streamlit as st
 from streamlit_option_menu import option_menu
