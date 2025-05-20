@@ -148,17 +148,16 @@ class PredictApp(HydraHeadApp):
                 cl001, ddd,cl002,cl003, cl004 = st.columns((0.95,3.8,2.5,4,16))  
                 if cl002.button("🦠 Predict"):
                     try:
-                        # if (text_seq != '') and (data_file_uploader is not None):                                                
-                        #     Sequence = 'two input'
-                        if (text_seq != '') and (data_file_uploader is None):
-                            Sequence = text_seq
-                        elif (text_seq != '') and (data_file_uploader is not None):                                                
+                        if (text_seq != '') and (data_file_uploader is not None):                                               
                             Sequence = 'two input'
+                        elif (text_seq != '') and (data_file_uploader is None):
+                            Sequence = text_seq
                         elif (text_seq == '') and (data_file_uploader is not None):
                             Sequence = data_file 
                         elif (text_seq == '') and (data_file_uploader is None):
                             Sequence = ''
                         if Sequence == "" :
+                            st.write("eiei")
                             cffs1,cffs2,cffs3 = st.columns((0.96,12,0.65))
                             with cffs2:
                                 Ideal_er = '<div align="center"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #F75D59; border-radius: 5px;">**Peptide not found‼️ \n please input your peptide</p>'
