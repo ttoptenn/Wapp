@@ -1076,8 +1076,8 @@ class PredictApp(HydraHeadApp):
 
                                     
                     except:
-                        st.write(Sequence)
-                        st.write(text_seq)
+                        st.error("❌ Failed to load model_anti_or_non")
+                        st.write(str(e))  # แสดง error
                         # Ideal_err = '<div align="center"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #F75D59; border-radius: 5px;">Error peptide format!!</p>'
                         # st.markdown(Ideal_err, unsafe_allow_html=True)
                         # # st.error('Error format your peptide !!')
