@@ -188,12 +188,10 @@ class PredictApp(HydraHeadApp):
                             # model_angram_post = joblib.load(model_angram_post)
 
 
-                            base_dir = Path(__file__).resolve().parent.parent
-
-                            model_anti_or_non = joblib.load(base_dir / "model_gbc_resize_test.joblib")
-                            model_angram_negative = joblib.load(base_dir / "model_RF_fulldata_gram-.pkl")
-                            model_angram_post = joblib.load(base_dir / "model_RF_gramPos_resize_test.joblib")
-                            st.write(Sequence)
+                            base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))  # ขึ้นไปนอกโฟลเดอร์ apps
+                            model_anti_or_non = joblib.load(os.path.join(base_path, "model_gbc_resize_test.joblib"))
+                            model_angram_negative = joblib.load(os.path.join(base_path, "model_RF_fulldata_gram-.pkl"))
+                            model_angram_post = joblib.load(os.path.join(base_path, "model_RF_gramPos_resize_test.joblib"))
                             # model_anti_or_non = joblib.load('model_gbc_resize_test.joblib')
                             # model_angram_negative = joblib.load('model_RF_fulldata_gram-.pkl')
                             # model_angram_post = joblib.load('model_RF_gramPos_resize_test.joblib')
