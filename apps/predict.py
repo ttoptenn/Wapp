@@ -182,6 +182,7 @@ class PredictApp(HydraHeadApp):
                             for i in range(len(split_sequence)):
                                 clean_text = " ".join([word for word in split_sequence[i].split()])
                                 list_clean_text.append(clean_text)
+                                st.write(list_clean_text)
                                     
                             seq = []
                             name_seq = []
