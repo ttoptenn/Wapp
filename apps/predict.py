@@ -173,14 +173,22 @@ class PredictApp(HydraHeadApp):
                             st.error('Please select only one input of peptides between FASTA text format or FASTA file format.') 
                         else:
                             # model---------------------------------------------------------------------------
-                            model_path_post = os.path.join(os.path.dirname(__file__), "..", "model_RF_gramPos_resize_test.joblib")
-                            model_path_post = os.path.abspath(model_path_post)  # แปลงเป็น path สมบูรณ์
+                            model_anti_or_non = os.path.join(os.path.dirname(__file__), "..", "model_gbc_resize_test.joblib")
+                            model_anti_or_non = os.path.abspath(model_anti_or_non)  # แปลงเป็น path สมบูรณ์
                             # โหลดโมเดล
-                            model = joblib.load(model_path_post)
+                            model_anti_or_non = joblib.load(model_anti_or_non)
+
+                            model_angram_negative = os.path.join(os.path.dirname(__file__), "..", "model_RF_fulldata_gram-.pkl")
+                            model_angram_negative = os.path.abspath(model_angram_negative)  # แปลงเป็น path สมบูรณ์
+                            model_angram_negative = joblib.load(model_angram_negative)
+                            
+                            model_angram_post = os.path.join(os.path.dirname(__file__), "..", "model_RF_gramPos_resize_test.joblib")
+                            model_angram_post = os.path.abspath(model_angram_post)  # แปลงเป็น path สมบูรณ์
+                            model_angram_post = joblib.load(model_angram_post)
+                            
                             st.write(Sequence)
-                            model_anti_or_non = joblib.load('model_gbc_resize_test.joblib')
-                            st.write(Sequence)
-                            model_angram_negative = joblib.load('model_RF_fulldata_gram-.pkl')
+                            # model_anti_or_non = joblib.load('model_gbc_resize_test.joblib')
+                            # model_angram_negative = joblib.load('model_RF_fulldata_gram-.pkl')
                             # model_angram_post = joblib.load('model_RF_gramPos_resize_test.joblib')
                             # input data list ----------------------------------------------------------------  
                             
