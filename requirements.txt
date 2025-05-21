@@ -8,3 +8,5 @@ hydralit==1.0.14
 hydralit-components==1.0.10
 streamlit-option-menu==0.3.2
 streamlit-lottie==0.0.3
+biopython==1.78
+modlamp==4.3.0
