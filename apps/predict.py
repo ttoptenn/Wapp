@@ -955,7 +955,7 @@ class PredictApp(HydraHeadApp):
                                                     
                                                         st.pyplot(plt)
                                                     
-                                            st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+                                            st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
                                                                                                 
                                         # show Dataframe of predict your peptide----------------------------------------------------------------------------------  
                                         df_user_name_seq['Predict_Peptide'] = anti_or_non
