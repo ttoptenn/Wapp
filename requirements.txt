@@ -2,6 +2,8 @@
 python-dotenv
 streamlit==1.18.1
 altair==4.2.2
+astropy==5.2.1
+
 
 # Model & math
 scikit-learn==1.2.2
