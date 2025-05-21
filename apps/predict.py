@@ -148,7 +148,6 @@ class PredictApp(HydraHeadApp):
 
                 cl001, ddd,cl002,cl003, cl004 = st.columns((0.95,3.8,2.5,4,16))  
                 if cl002.button("🦠 Predict"):
-                    st.write("✅ Predict button clicked")
                     try:
                         if (text_seq != '') and (data_file_uploader is not None):                                               
                             Sequence = 'two input'
@@ -199,7 +198,7 @@ class PredictApp(HydraHeadApp):
                             for i in range(len(split_sequence)):
                                 clean_text = " ".join([word for word in split_sequence[i].split()])
                                 list_clean_text.append(clean_text)
-                                st.write(list_clean_text)
+                                # st.write(list_clean_text)
                                     
                             seq = []
                             name_seq = []
@@ -956,7 +955,7 @@ class PredictApp(HydraHeadApp):
                                                     
                                                         st.pyplot(plt)
                                                     
-                                            st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+                                            st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
                                                                                                 
                                         # show Dataframe of predict your peptide----------------------------------------------------------------------------------  
                                         df_user_name_seq['Predict_Peptide'] = anti_or_non
@@ -1068,7 +1067,7 @@ class PredictApp(HydraHeadApp):
                     except:
                         # except Exception as e:
                         # st.error("❌ Failed to load model_anti_or_non")
-                        st.write(f"Details: {str(e)}")   # แสดง error
+                        # st.write(f"Details: {str(e)}")   # แสดง error
                         Ideal_err = '<div align="center"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #F75D59; border-radius: 5px;">Error peptide format!!</p>'
                         st.markdown(Ideal_err, unsafe_allow_html=True)
                         # st.error('Error format your peptide !!')
