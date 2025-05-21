@@ -176,31 +176,21 @@ class PredictApp(HydraHeadApp):
                         else:
                             # model---------------------------------------------------------------------------
 
-
-                            # base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))  # ขึ้นไปนอกโฟลเดอร์ apps
-                            # model_anti_or_non = joblib.load(os.path.join(base_path, "model_gbc_resize_test.joblib"))
-                            # model_angram_negative = joblib.load(os.path.join(base_path, "model_RF_fulldata_gram-.pkl"))
-                            # model_angram_post = joblib.load(os.path.join(base_path, "model_RF_gramPos_resize_test.joblib"))
-
                             model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "model_gbc_resize_test.joblib"))
-                            st.write("🔍 Loading model from:", model_path)
+                            # st.write("🔍 Loading model from:", model_path)
                             model_anti_or_non = joblib.load(model_path)
-                            st.success("✅ model_anti_or_non loaded")
+                            # st.success("✅ model_anti_or_non loaded")
 
                             model_path2 = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "model_RF_fulldata_gram-.pkl"))
-                            st.write("🔍 Loading model from:", model_path2)
+                            # st.write("🔍 Loading model from:", model_path2)
                             model_angram_negative = joblib.load(model_path2)
-                            st.success("✅ model_angram_negative loaded")
+                            # st.success("✅ model_angram_negative loaded")
 
                             model_path3 = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "model_RF_gramPos_resize_test.joblib"))
-                            st.write("🔍 Loading model from:", model_path3)
+                            # st.write("🔍 Loading model from:", model_path3)
                             model_angram_post = joblib.load(model_path3)
-                            st.success("✅ model_angram_post loaded")
+                            # st.success("✅ model_angram_post loaded")
 
-                            # -------------------------------------------------------------------------------------------------
-                            # model_anti_or_non = joblib.load('model_gbc_resize_test.joblib')
-                            # model_angram_negative = joblib.load('model_RF_fulldata_gram-.pkl')
-                            # model_angram_post = joblib.load('model_RF_gramPos_resize_test.joblib')
                             # input data list ----------------------------------------------------------------  
                             
                             split_sequence = Sequence.split("\n")
@@ -966,7 +956,7 @@ class PredictApp(HydraHeadApp):
                                                     
                                                         st.pyplot(plt)
                                                     
-                                            st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+                                            st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
                                                                                                 
                                         # show Dataframe of predict your peptide----------------------------------------------------------------------------------  
                                         df_user_name_seq['Predict_Peptide'] = anti_or_non
@@ -1075,21 +1065,22 @@ class PredictApp(HydraHeadApp):
                                                 </style>""", unsafe_allow_html=True)
 
                                     
-                    except Exception as e:
-                        st.error("❌ Failed to load model_anti_or_non")
+                    except:
+                        # except Exception as e:
+                        # st.error("❌ Failed to load model_anti_or_non")
                         st.write(f"Details: {str(e)}")   # แสดง error
-                        # Ideal_err = '<div align="center"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #F75D59; border-radius: 5px;">Error peptide format!!</p>'
-                        # st.markdown(Ideal_err, unsafe_allow_html=True)
-                        # # st.error('Error format your peptide !!')
-                        # Ideal_forexa = '<div align="left"><p style="font-sans-serif:; color: black; font-size: 15px; background-color: white; border-radius: 5px;">For example, input your peptide FASTA</p>'
-                        # st.markdown(Ideal_forexa, unsafe_allow_html=True) 
-                        # # st.write("For example, input your peptide FASTA format")                                  
-                        # html_temp = """
-                        #                     <div style="background-color:#D1F0FF;padding:1px">
-                        #                     <h8 style="color:black;text-align:left;font-size:80%;"><u>Sample1</u><br>>Sequence_name1<br>DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW<br> 
-                        #                     <br><u>Sample2</u><br>>Sequence_name1<br>DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW<br>>Sequence_name2<br>FPFLLSLIPSAISALKKL </h1>
-                        #                     </div><br>"""
-                        # st.markdown(html_temp,unsafe_allow_html=True)
+                        Ideal_err = '<div align="center"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #F75D59; border-radius: 5px;">Error peptide format!!</p>'
+                        st.markdown(Ideal_err, unsafe_allow_html=True)
+                        # st.error('Error format your peptide !!')
+                        Ideal_forexa = '<div align="left"><p style="font-sans-serif:; color: black; font-size: 15px; background-color: white; border-radius: 5px;">For example, input your peptide FASTA</p>'
+                        st.markdown(Ideal_forexa, unsafe_allow_html=True) 
+                        # st.write("For example, input your peptide FASTA format")                                  
+                        html_temp = """
+                                            <div style="background-color:#D1F0FF;padding:1px">
+                                            <h8 style="color:black;text-align:left;font-size:80%;"><u>Sample1</u><br>>Sequence_name1<br>DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW<br> 
+                                            <br><u>Sample2</u><br>>Sequence_name1<br>DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW<br>>Sequence_name2<br>FPFLLSLIPSAISALKKL </h1>
+                                            </div><br>"""
+                        st.markdown(html_temp,unsafe_allow_html=True)
 
                 elif cl003.button("❓ how to paste input"):
                     # st.write("For example, input your peptide FASTA format")
