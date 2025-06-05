@@ -2,6 +2,7 @@ from __future__ import print_function, division
 import streamlit as st
 import numpy as np
 import pandas as pd
+import time
 from hydralit import HydraHeadApp
 import hydralit_components as hc
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
@@ -145,7 +146,7 @@ class PredictApp(HydraHeadApp):
 
                     # st.write('You selected:', option_gram)
                     # st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-
+               
                 cl001, ddd,cl002,cl003, cl004 = st.columns((0.95,3.8,2.5,4,16))  
                 if cl002.button("🦠 Predict"):
                     try:
