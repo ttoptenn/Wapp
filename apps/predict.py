@@ -593,7 +593,21 @@ class PredictApp(HydraHeadApp):
                             pos_ro_nec = []
                             probs_anti_or_non_list = []
                             probs_nec_list = [] 
-                            probs_poe_list =[]               
+                            probs_poe_list =[]   
+                            
+                            # -- สี progress bar --------------------------------------------------------------
+                            st.markdown("""
+                                <style>
+                                .stProgress > div > div > div > div {
+                                    background-color: #f48fb1;
+                                }
+                                </style>
+                            """, unsafe_allow_html=True)
+                            # ---- progress bar --------------------------------------------------------------
+                            progress_bar = st.progress(0)
+                            status_text = st.empty()
+                            total = len(df_user_name_seq)
+                            # ------------------------------------------------------------------------------
                             for i in df_user_name_seq['Sequence']:
 
                                 len_list.append(len(i))
