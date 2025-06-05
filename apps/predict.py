@@ -975,7 +975,7 @@ class PredictApp(HydraHeadApp):
                                                                 <div id="head" style="background-color:{};padding:1px;border-radius:'15px';">
                                                                 </div>
                                                                 """
-                                            Ideal_dataf = '<div align="center"><p style="font-sans-serif:; color: white; font-size: 40px; background-color: #1F3D7C; border-radius: 5px; text-align:center;">Out put</p>'
+                                            Ideal_dataf = '<div align="center"><p style="font-sans-serif:; color: white; font-size: 40px; background-color: #1F3D7C; border-radius: 5px; text-align:center;">Output</p>'
                                             st.markdown(Ideal_dataf, unsafe_allow_html=True)
                                         
                                             # st.markdown(html_temp.format('white','1px', '50%','#1F3D7C','#FFFFFF'),unsafe_allow_html=True)
