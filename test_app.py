@@ -36,7 +36,7 @@ if __name__ == '__main__':
             hide_streamlit_markers=hide_st,
             #add a nice banner, this banner has been defined as 5 sections with spacing defined by the banner_spacing array below.
             use_banner_images=["resources/pig0.png",None,{'header':"<h1 style='text-align:center;padding: 0px 0px;color:F36C23;font-size:175%;'>WAAPP: Web Application for Antimicrobial Peptide Prediction</h1>"},None,"./resources/logo2.jpg"], 
-            banner_spacing=[6,12,40,10,6.5],
+            banner_spacing=[5,10,40,10,6],
             navbar_theme=over_theme
         )
 
