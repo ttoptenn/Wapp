@@ -659,9 +659,7 @@ class PredictApp(HydraHeadApp):
                                 with l_col2:
                                     if len(df_ant_non_normed) <= 50:
                                         for i in range(len(df_ant_non_normed)):
-                                            stqdm.pandas()
-                                            pd.Series(range(len(df_ant_non_normed))).progress_map(lambda x: sleep(1))
-                                            pd.Dataframe({"a": range(len(df_ant_non_normed))}).progress_apply(lambda x: sleep(1), axis=1)
+                                            
                                             with open('style2.css') as f:
                                                 with st.expander('Describe detail information'):
                                                     st.info(
