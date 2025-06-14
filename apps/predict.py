@@ -575,7 +575,8 @@ class PredictApp(HydraHeadApp):
                                         probs_poe_list.append('-')
                                             # st.subheader('❌ Your peptide is non antimicrobial peptide.')
                                             # st.text('Probability is '+ str((probs_anti_or_non)[0]))
-                                                                        
+                                time.sleep(1)
+                                my_bar.empty()                                        
                                 return anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list
         
                             len_list = []                        
