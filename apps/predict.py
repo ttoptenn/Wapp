@@ -657,7 +657,7 @@ class PredictApp(HydraHeadApp):
                                     progress_text = "Operation in progress. Please wait."
                                     my_bar = st.progress(0, text=progress_text)
                                     
-                                    for percent_complete in range(100):
+                                    for percent_complete in range(len(df_ant_non_normed)):
                                         time.sleep(0.01)
                                         my_bar.progress(percent_complete/len(df_use_in_model), text=progress_text)
                                      
