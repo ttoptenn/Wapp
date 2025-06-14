@@ -521,8 +521,7 @@ class PredictApp(HydraHeadApp):
                                 return df_use_in_model
                             # function model for predict peptide ---------------------------------------------------------------- 
                             def use_model(data_user_features_user_in_model, data_user_nec_pos_in_model):
-                                progress_text = "Operation in progress. Please wait."
-                                my_bar = st.progress(0, text=progress_text)
+                                
                                 for percent_complete in range(100):
                                     time.sleep(0.01)
                                     my_bar.progress(percent_complete*100/len(data_user_features_user_in_model), text=progress_text)
@@ -658,7 +657,8 @@ class PredictApp(HydraHeadApp):
                                         
                                 # <h1 style="color:{};text-align:center;">Dataframe of predict your peptide</h1>
                                 l_col1, l_col2, lasti = st.columns((0.60,12,0.6))
-                                
+                                progress_text = "Operation in progress. Please wait."
+                                my_bar = st.progress(0, text=progress_text)
                                 with l_col2:
                                     if len(df_ant_non_normed) <= 50:
                                         for i in range(len(df_ant_non_normed)):                                   
