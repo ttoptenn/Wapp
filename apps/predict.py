@@ -185,6 +185,162 @@ def Phipho(smi):
     # st.write('gggg'+ score_hydrophilic[0])
     # print('score hydrophilic:',Sum1,'Score hydrophobic:',Sum2)
     return score_hydrophilic,Score_hydrophobic
+def calculate_align_sequences(sequence_A, sequence_B, **kwargs):
+    def _calculate_identity(sequenceA, sequenceB):
+        sa, sb, sl = sequenceA, sequenceB, len(sequenceA)
+        c_matches = [sa[i] == sb[i] for i in range(sl)]
+        matches = sum([1 for i in range(sl) if (sa[i] == sb[i])])
+        # gapless_sl = sum([1 for i in range(sl) if (sa[i] != '-' and sb[i] != '-')])
+        # gap_id = (100 * sum(matches)) / gapless_sl
+        gaps_al = sum([1 for i in range(sl) if (sa[i] == '-' or sb[i] == '-')])
+        return (matches, gaps_al)
+                
+    def _calculate_similarity(sequenceA, sequenceB):
+        sa, sb, sal, sbl = sequenceA, sequenceB, len(sequenceA), len(sequenceB)
+        c_sim = 0
+        align = []
+        for i in range(sal):
+            if ((sa[i] in Hydrophobic_list and sb[i] in Hydrophobic_list ) or (sa[i] in Neutral_list and sb[i] in Neutral_list ) or (sa[i] in Hydrophilic_list and sb[i] in Hydrophilic_list) or (sa[i] in charged_list and sb[i] in charged_list)  or (sa[i] in Uncharged_list and sb[i] in Uncharged_list) or (sa[i] == sb[i])):
+            # if ((sa[i] in Aliphatic_list and sb[i] in Aliphatic_list ) or (sa[i] in Hydrophobic_list and sb[i] in Hydrophobic_list ) or (sa[i] in Hydroxyl and sb[i] in Hydroxyl) or (sa[i] in charged_list and sb[i] in charged_list) or (sa[i] in Acidic and sb[i] in Acidic) or (sa[i] in Hydrophilic_list and sb[i] in Hydrophilic_list) or (sa[i] in a_list and sb[i] in a_list) or (sa[i] in b_list and sb[i] in b_list) or (sa[i] in c_list and sb[i] in c_list) or (sa[i] == sb[i]) or (sa[i] in a and sb[i] in a)):
+                if (sa[i] != sb[i]):
+                    align.append(':')
+                elif (sa[i] == sb[i]):
+                    align.append('|')
+                elif ((sa[i] != sb[i]) and (sa[i] != '-') and (sb[i] != '-')):
+                    align.append('.')
+                c_sim = c_sim+1
+            else:
+                if ((sa[i] != sb[i]) and (sa[i] != '-') and (sb[i] != '-')):
+                    align.append('.')
+                else:  
+                    align.append(' ')
+        align_l = ''.join(align)
+        return (align_l, c_sim)
+            
+    matrix = kwargs.get('matrix', matlist.blosum62)
+    gap_open = kwargs.get('gap_open', -10.0)
+    gap_extend = kwargs.get('gap_extend', -0.5)
+
+    alns = pairwise2.align.globalds(sequence_A, sequence_B,
+                                    matrix, gap_open, gap_extend,
+                                    penalize_end_gaps=(False, False) )
+    seq_id_list = []
+    x = 0
+            
+    for alignment in alns: 
+        aligned_A, aligned_B, score, begin, end = alignment
+        seq_id = _calculate_identity(aligned_A, aligned_B)
+        seq_id_list.append(seq_id)
+    inden = seq_id_list[0]
+    for i in seq_id_list:
+        if i <= inden:
+            aligned_A, aligned_B, score, begin, end = alns[x]
+        x=x+1
+                
+    # Calculate sequence identity -----------------------------------------------------------------
+    matches, gaps_al = _calculate_identity(aligned_A, aligned_B)
+    align_l, c_sim  = _calculate_similarity(aligned_A, aligned_B)
+
+    c_dot = sum([1 for i in range(len(align_l)) if (align_l[i] == '.')])
+    c_co = sum([1 for i in range(len(align_l)) if (align_l[i] == ':')])
+    len_a, len_b = len(sequence_A), len(sequence_B)
+    len_al = (len_a + len_b) - (matches + c_dot + c_co)
+
+    gaps = (100 * gaps_al)/ len_al
+    sim = (100 * c_sim) / len_al
+    iden = (100 * matches) / len_al
+
+    # return (aligned_A,align_list, aligned_B), 'score: %.1f' %score, 'identity: %.1f' %seq_id,'similarity: %.1f' %sim_p
+    return (aligned_A,align_l, aligned_B), float(f'{sim:,.2f}'), float(f'{iden:,.2f}'), float(f'{gaps:,.2f}'), int(c_sim), int(matches), int(gaps_al), int(len_al)
+
+def align_sequences(sequence_B):
+    # sim_list = ['DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW', 'MKFTIVFLLLACVFAMGVATPGKPRPYSPRPTSHPRPIRVRREALAIEDHLTQAAIRPPPILPA', 'MASTERNFLLLSLVVSALSGLVHRSDAAEISFGSCTPQQSDERGQCVHITSCPYLANLLMVEPKTPAQRILLSKSQCGLDNRVEGLVNRILVCCPQSMRGNIMDSEPTPSTRDALQQGDVLPGNDVCGFLFADRIFGGTNTTLWEFPWMVLLQYKKLFSETYTFNCGGALLNSRYVLTAGHCLASRELDKSGAVLHSVRLGEWDTRTDPDCTTQMNGQRICAPKHIDIEVEKGIIHEMYAPNSVDQRNDIALVRLKRIVSYTDYVRPICLPTDGLVQNNFVDYGMDVAGWGLTENMQPSAIKLKITVNVWNLTSCQEKYSSFKVKLDDSQMCAGGQLGVDTCGGDSGGPLMVPISTGGRDVFYIAGVTSYGTKPCGLKGWPGVYTRTGAFIDWIKQKLEP','EDLTVKIGDFGLATEKSRWSGSHQFEQLS','MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR', 'MTTCSRQFTSSSSMKGSCGIGGGIGAGSSRISSVLAGGSCRAPNTYGGGLSVSSSRFSSGGAYGLGGGYGGGFSSSSSSFGSGFGGGYGGGLGAGLGGGFGGGFAGGDGLLVGSEKVTMQNLNDRLASYLDKVRALEEANADLEVKIRDWYQRQRPAEIKDYSPYFKTIEDLRNKILTATVDNANVLLQIDNARLAADDFRTKYETELNLRMSVEADINGLRRVLDELTLARADLEMQIESLKEELAYLKKNHEEEMNALRGQVGGDVNVEMDAAPGVDLSRILNEMRDQYEKMAEKNRKDAEEWFFTKTEELNREVATNSELVQSGKSEISELRRTMQNLEIELQSQLSMKASLENSLEETKGRYCMQLAQIQEMIGSVEEQLAQLRCEMEQQNQEYKILLDVKTRLEQEIATYRRLLEGEDAHLSSSQFSSGSQSSRDVTSSSRQIRTKVMDVHDGKVVSTHEQVLRTKN']
+    c = 0
+    list_sim_align = []
+    list_iden_align = []
+    list_gaps_align = []
+    list_c_sim =[]
+    list_matches = []
+    list_gaps_al = []
+    list_len_al = []
+    for i in sim_list:
+        align = calculate_align_sequences(i, sequence_B)
+        list_sim_align.append(align[1])
+        list_iden_align.append(align[2])
+        list_gaps_align.append(align[3])
+        list_c_sim.append(align[4])
+        list_matches.append(align[5])
+        list_gaps_al.append(align[6])
+        list_len_al.append(align[7])
+        
+        #ค่าในlist --> defensin,Drosocin,Spaetzle,B-RAF,hemoglobin,keratin 1=%sim, 2=iden, 3=gaps, 4 = c_sim, 5 = matches, 6 = gaps_al, 7 = len_al
+    return list_sim_align, list_iden_align, list_gaps_align, list_c_sim, list_matches, list_gaps_al, list_len_al
+        
+def all_data_user(Sequence_len, hydrophobic, hydrophilic, uncharged, positive_charge, Negative_charge, Molecular_Weight, pI, score_hydrophilic, Score_hydrophobic, similarity_Betadefensin, similarity_Drosocin, similarity_Spaetzle, similarity_BRAF, similarity_hemoglobin, similarity_keratin):
+    dict = {'Sequence_len': Sequence_len, '%Hydrophobic': hydrophobic, '%Hydrophilic': hydrophilic, 
+                    '%Uncharged':uncharged, '%Positive_Charge' : positive_charge, '%Negative_Charge' : Negative_charge, 
+                    'Molecular_Weight': Molecular_Weight, 'Isoelectric_Point': pI, 'Score_Hydrophilic' :score_hydrophilic, 
+                    'Score_Hydrophobic':Score_hydrophobic, 'Similarity_Beta-defensin_1': similarity_Betadefensin,
+                    'Similarity_Drosocin': similarity_Drosocin, 'Similarity_Spaetzle': similarity_Spaetzle, 
+                    'Similarity_B-RAF' : similarity_BRAF, 'Similarity_Hemoglobin': similarity_hemoglobin, 'Similarity_Keratin' : similarity_keratin} 
+    
+    df_use_in_model = pd.DataFrame(dict, dtype = float)
+    
+    return df_use_in_model
+# function model for predict peptide ---------------------------------------------------------------- 
+def use_model(data_user_features_user_in_model, data_user_nec_pos_in_model):
+    # list_test_nom = data_user_features_user_in_model.values.tolist()
+    # predictions_anti_or_non = model_anti_or_non.predict(data_user_features_user_in_model)
+    real_probs_anti_or_non = model_anti_or_non.predict_proba(data_user_features_user_in_model)[0]
+    # predictions_nec = model_angram_negative.predict(data_user_nec_pos_in_model)
+    real_probs_nec = model_angram_negative.predict_proba(data_user_nec_pos_in_model)[0]
+    # predictions_pos = model_angram_post.predict(data_user_nec_pos_in_model)
+    real_probs_pos = model_angram_post.predict_proba(data_user_nec_pos_in_model)[0]
+    probs_anti_or_non = [np.round(x,5) for x in real_probs_anti_or_non]
+    probs_nec = [np.round(x,5) for x in real_probs_nec]
+    probs_pos = [np.round(x,5) for x in real_probs_pos]                                                               
+    if probs_anti_or_non[1] >= (int(option_anti)/100):                                        
+        anti_or_non.append('antimicrobial')                               
+        probs_anti_or_non_list.append(probs_anti_or_non[1]) 
+        # st.subheader('✔️ Your peptide is an antimicrobial peptide.')
+        # st.text('Probability is '+ str((probs_anti_or_non)[1]))
+        if (probs_pos[1] >= (int(option_gram)/100)) and (real_probs_nec[1] >= (int(option_gram)/100)):
+                # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
+                # st.text('Probability is '+ str((probs_pos)[1]))
+                # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.')
+                # st.text('Probability is '+ str((probs_nec)[1]))
+            pos_ro_nec.append('gram+,gram-')
+            probs_nec_list.append(probs_pos[1]) 
+            probs_poe_list.append(probs_nec[1])
+        elif (real_probs_pos[1] >= (int(option_gram)/100)) and (real_probs_nec[1] < (int(option_gram)/100)):
+            # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
+            # st.text('Probability is '+ str((probs_pos)[1]))
+            pos_ro_nec.append('gram+') 
+            probs_poe_list.append((probs_pos)[1])
+            probs_nec_list.append('-')
+        elif (real_probs_pos[1] < (int(option_gram)/100)) and (real_probs_nec[1] >= (int(option_gram)/100)):
+                # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.' )
+                # st.text('Probability is '+ str((probs_nec)[1]))
+            pos_ro_nec.append('gram-')
+            probs_poe_list.append('-')   
+            probs_nec_list.append((probs_nec)[1])   
+        elif (real_probs_pos[1] < (int(option_gram)/100)) and (real_probs_nec[1] < (int(option_gram)/100)):
+                # st.success(' 󠀠 󠀠✔️ 󠀠 Resist other gram of bacteria.')
+            pos_ro_nec.append('other gram')
+            probs_nec_list.append((probs_nec)[1]) 
+            probs_poe_list.append((probs_pos)[1])                                                                                
+            
+    elif real_probs_anti_or_non[1] < (int(option_anti)/100):                                        
+        anti_or_non.append('non antimicrobial')
+        pos_ro_nec.append("-")
+        probs_anti_or_non_list.append(probs_anti_or_non[1])
+        probs_nec_list.append('-') 
+        probs_poe_list.append('-')
+            # st.subheader('❌ Your peptide is non antimicrobial peptide.')
+            # st.text('Probability is '+ str((probs_anti_or_non)[0]))
+                                        
+    return anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list
+
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 class PredictApp(HydraHeadApp):
@@ -418,162 +574,7 @@ class PredictApp(HydraHeadApp):
                             Uncharged_list = ['T','S','Q','N']
                             sim_list = ['DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW', 'MKFTIVFLLLACVFAMGVATPGKPRPYSPRPTSHPRPIRVRREALAIEDHLTQAAIRPPPILPA', 'MASTERNFLLLSLVVSALSGLVHRSDAAEISFGSCTPQQSDERGQCVHITSCPYLANLLMVEPKTPAQRILLSKSQCGLDNRVEGLVNRILVCCPQSMRGNIMDSEPTPSTRDALQQGDVLPGNDVCGFLFADRIFGGTNTTLWEFPWMVLLQYKKLFSETYTFNCGGALLNSRYVLTAGHCLASRELDKSGAVLHSVRLGEWDTRTDPDCTTQMNGQRICAPKHIDIEVEKGIIHEMYAPNSVDQRNDIALVRLKRIVSYTDYVRPICLPTDGLVQNNFVDYGMDVAGWGLTENMQPSAIKLKITVNVWNLTSCQEKYSSFKVKLDDSQMCAGGQLGVDTCGGDSGGPLMVPISTGGRDVFYIAGVTSYGTKPCGLKGWPGVYTRTGAFIDWIKQKLEP','EDLTVKIGDFGLATEKSRWSGSHQFEQLS','MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR', 'MTTCSRQFTSSSSMKGSCGIGGGIGAGSSRISSVLAGGSCRAPNTYGGGLSVSSSRFSSGGAYGLGGGYGGGFSSSSSSFGSGFGGGYGGGLGAGLGGGFGGGFAGGDGLLVGSEKVTMQNLNDRLASYLDKVRALEEANADLEVKIRDWYQRQRPAEIKDYSPYFKTIEDLRNKILTATVDNANVLLQIDNARLAADDFRTKYETELNLRMSVEADINGLRRVLDELTLARADLEMQIESLKEELAYLKKNHEEEMNALRGQVGGDVNVEMDAAPGVDLSRILNEMRDQYEKMAEKNRKDAEEWFFTKTEELNREVATNSELVQSGKSEISELRRTMQNLEIELQSQLSMKASLENSLEETKGRYCMQLAQIQEMIGSVEEQLAQLRCEMEQQNQEYKILLDVKTRLEQEIATYRRLLEGEDAHLSSSQFSSGSQSSRDVTSSSRQIRTKVMDVHDGKVVSTHEQVLRTKN']
 
-                            def calculate_align_sequences(sequence_A, sequence_B, **kwargs):
-                                def _calculate_identity(sequenceA, sequenceB):
-                                    sa, sb, sl = sequenceA, sequenceB, len(sequenceA)
-                                    c_matches = [sa[i] == sb[i] for i in range(sl)]
-                                    matches = sum([1 for i in range(sl) if (sa[i] == sb[i])])
-                                    # gapless_sl = sum([1 for i in range(sl) if (sa[i] != '-' and sb[i] != '-')])
-                                    # gap_id = (100 * sum(matches)) / gapless_sl
-                                    gaps_al = sum([1 for i in range(sl) if (sa[i] == '-' or sb[i] == '-')])
-                                    return (matches, gaps_al)
-                                            
-                                def _calculate_similarity(sequenceA, sequenceB):
-                                    sa, sb, sal, sbl = sequenceA, sequenceB, len(sequenceA), len(sequenceB)
-                                    c_sim = 0
-                                    align = []
-                                    for i in range(sal):
-                                        if ((sa[i] in Hydrophobic_list and sb[i] in Hydrophobic_list ) or (sa[i] in Neutral_list and sb[i] in Neutral_list ) or (sa[i] in Hydrophilic_list and sb[i] in Hydrophilic_list) or (sa[i] in charged_list and sb[i] in charged_list)  or (sa[i] in Uncharged_list and sb[i] in Uncharged_list) or (sa[i] == sb[i])):
-                                        # if ((sa[i] in Aliphatic_list and sb[i] in Aliphatic_list ) or (sa[i] in Hydrophobic_list and sb[i] in Hydrophobic_list ) or (sa[i] in Hydroxyl and sb[i] in Hydroxyl) or (sa[i] in charged_list and sb[i] in charged_list) or (sa[i] in Acidic and sb[i] in Acidic) or (sa[i] in Hydrophilic_list and sb[i] in Hydrophilic_list) or (sa[i] in a_list and sb[i] in a_list) or (sa[i] in b_list and sb[i] in b_list) or (sa[i] in c_list and sb[i] in c_list) or (sa[i] == sb[i]) or (sa[i] in a and sb[i] in a)):
-                                            if (sa[i] != sb[i]):
-                                                align.append(':')
-                                            elif (sa[i] == sb[i]):
-                                                align.append('|')
-                                            elif ((sa[i] != sb[i]) and (sa[i] != '-') and (sb[i] != '-')):
-                                                align.append('.')
-                                            c_sim = c_sim+1
-                                        else:
-                                            if ((sa[i] != sb[i]) and (sa[i] != '-') and (sb[i] != '-')):
-                                                align.append('.')
-                                            else:  
-                                                align.append(' ')
-                                    align_l = ''.join(align)
-                                    return (align_l, c_sim)
-                                        
-                                matrix = kwargs.get('matrix', matlist.blosum62)
-                                gap_open = kwargs.get('gap_open', -10.0)
-                                gap_extend = kwargs.get('gap_extend', -0.5)
-
-                                alns = pairwise2.align.globalds(sequence_A, sequence_B,
-                                                                matrix, gap_open, gap_extend,
-                                                                penalize_end_gaps=(False, False) )
-                                seq_id_list = []
-                                x = 0
-                                        
-                                for alignment in alns: 
-                                    aligned_A, aligned_B, score, begin, end = alignment
-                                    seq_id = _calculate_identity(aligned_A, aligned_B)
-                                    seq_id_list.append(seq_id)
-                                inden = seq_id_list[0]
-                                for i in seq_id_list:
-                                    if i <= inden:
-                                        aligned_A, aligned_B, score, begin, end = alns[x]
-                                    x=x+1
-                                            
-                                # Calculate sequence identity -----------------------------------------------------------------
-                                matches, gaps_al = _calculate_identity(aligned_A, aligned_B)
-                                align_l, c_sim  = _calculate_similarity(aligned_A, aligned_B)
-
-                                c_dot = sum([1 for i in range(len(align_l)) if (align_l[i] == '.')])
-                                c_co = sum([1 for i in range(len(align_l)) if (align_l[i] == ':')])
-                                len_a, len_b = len(sequence_A), len(sequence_B)
-                                len_al = (len_a + len_b) - (matches + c_dot + c_co)
-
-                                gaps = (100 * gaps_al)/ len_al
-                                sim = (100 * c_sim) / len_al
-                                iden = (100 * matches) / len_al
-
-                                # return (aligned_A,align_list, aligned_B), 'score: %.1f' %score, 'identity: %.1f' %seq_id,'similarity: %.1f' %sim_p
-                                return (aligned_A,align_l, aligned_B), float(f'{sim:,.2f}'), float(f'{iden:,.2f}'), float(f'{gaps:,.2f}'), int(c_sim), int(matches), int(gaps_al), int(len_al)
-
-                            def align_sequences(sequence_B):
-                                # sim_list = ['DFASCHTNGGICLPNRCPGHMIQIGICFRPRVKCCRSW', 'MKFTIVFLLLACVFAMGVATPGKPRPYSPRPTSHPRPIRVRREALAIEDHLTQAAIRPPPILPA', 'MASTERNFLLLSLVVSALSGLVHRSDAAEISFGSCTPQQSDERGQCVHITSCPYLANLLMVEPKTPAQRILLSKSQCGLDNRVEGLVNRILVCCPQSMRGNIMDSEPTPSTRDALQQGDVLPGNDVCGFLFADRIFGGTNTTLWEFPWMVLLQYKKLFSETYTFNCGGALLNSRYVLTAGHCLASRELDKSGAVLHSVRLGEWDTRTDPDCTTQMNGQRICAPKHIDIEVEKGIIHEMYAPNSVDQRNDIALVRLKRIVSYTDYVRPICLPTDGLVQNNFVDYGMDVAGWGLTENMQPSAIKLKITVNVWNLTSCQEKYSSFKVKLDDSQMCAGGQLGVDTCGGDSGGPLMVPISTGGRDVFYIAGVTSYGTKPCGLKGWPGVYTRTGAFIDWIKQKLEP','EDLTVKIGDFGLATEKSRWSGSHQFEQLS','MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR', 'MTTCSRQFTSSSSMKGSCGIGGGIGAGSSRISSVLAGGSCRAPNTYGGGLSVSSSRFSSGGAYGLGGGYGGGFSSSSSSFGSGFGGGYGGGLGAGLGGGFGGGFAGGDGLLVGSEKVTMQNLNDRLASYLDKVRALEEANADLEVKIRDWYQRQRPAEIKDYSPYFKTIEDLRNKILTATVDNANVLLQIDNARLAADDFRTKYETELNLRMSVEADINGLRRVLDELTLARADLEMQIESLKEELAYLKKNHEEEMNALRGQVGGDVNVEMDAAPGVDLSRILNEMRDQYEKMAEKNRKDAEEWFFTKTEELNREVATNSELVQSGKSEISELRRTMQNLEIELQSQLSMKASLENSLEETKGRYCMQLAQIQEMIGSVEEQLAQLRCEMEQQNQEYKILLDVKTRLEQEIATYRRLLEGEDAHLSSSQFSSGSQSSRDVTSSSRQIRTKVMDVHDGKVVSTHEQVLRTKN']
-                                c = 0
-                                list_sim_align = []
-                                list_iden_align = []
-                                list_gaps_align = []
-                                list_c_sim =[]
-                                list_matches = []
-                                list_gaps_al = []
-                                list_len_al = []
-                                for i in sim_list:
-                                    align = calculate_align_sequences(i, sequence_B)
-                                    list_sim_align.append(align[1])
-                                    list_iden_align.append(align[2])
-                                    list_gaps_align.append(align[3])
-                                    list_c_sim.append(align[4])
-                                    list_matches.append(align[5])
-                                    list_gaps_al.append(align[6])
-                                    list_len_al.append(align[7])
-                                    
-                                    #ค่าในlist --> defensin,Drosocin,Spaetzle,B-RAF,hemoglobin,keratin 1=%sim, 2=iden, 3=gaps, 4 = c_sim, 5 = matches, 6 = gaps_al, 7 = len_al
-                                return list_sim_align, list_iden_align, list_gaps_align, list_c_sim, list_matches, list_gaps_al, list_len_al
-                                    
-                            def all_data_user(Sequence_len, hydrophobic, hydrophilic, uncharged, positive_charge, Negative_charge, Molecular_Weight, pI, score_hydrophilic, Score_hydrophobic, similarity_Betadefensin, similarity_Drosocin, similarity_Spaetzle, similarity_BRAF, similarity_hemoglobin, similarity_keratin):
-                                dict = {'Sequence_len': Sequence_len, '%Hydrophobic': hydrophobic, '%Hydrophilic': hydrophilic, 
-                                                '%Uncharged':uncharged, '%Positive_Charge' : positive_charge, '%Negative_Charge' : Negative_charge, 
-                                                'Molecular_Weight': Molecular_Weight, 'Isoelectric_Point': pI, 'Score_Hydrophilic' :score_hydrophilic, 
-                                                'Score_Hydrophobic':Score_hydrophobic, 'Similarity_Beta-defensin_1': similarity_Betadefensin,
-                                                'Similarity_Drosocin': similarity_Drosocin, 'Similarity_Spaetzle': similarity_Spaetzle, 
-                                                'Similarity_B-RAF' : similarity_BRAF, 'Similarity_Hemoglobin': similarity_hemoglobin, 'Similarity_Keratin' : similarity_keratin} 
-                                
-                                df_use_in_model = pd.DataFrame(dict, dtype = float)
-                                
-                                return df_use_in_model
-                            # function model for predict peptide ---------------------------------------------------------------- 
-                            def use_model(data_user_features_user_in_model, data_user_nec_pos_in_model):
-                                # list_test_nom = data_user_features_user_in_model.values.tolist()
-                                # predictions_anti_or_non = model_anti_or_non.predict(data_user_features_user_in_model)
-                                real_probs_anti_or_non = model_anti_or_non.predict_proba(data_user_features_user_in_model)[0]
-                                # predictions_nec = model_angram_negative.predict(data_user_nec_pos_in_model)
-                                real_probs_nec = model_angram_negative.predict_proba(data_user_nec_pos_in_model)[0]
-                                # predictions_pos = model_angram_post.predict(data_user_nec_pos_in_model)
-                                real_probs_pos = model_angram_post.predict_proba(data_user_nec_pos_in_model)[0]
-                                probs_anti_or_non = [np.round(x,5) for x in real_probs_anti_or_non]
-                                probs_nec = [np.round(x,5) for x in real_probs_nec]
-                                probs_pos = [np.round(x,5) for x in real_probs_pos]                                                               
-                                if probs_anti_or_non[1] >= (int(option_anti)/100):                                        
-                                    anti_or_non.append('antimicrobial')                               
-                                    probs_anti_or_non_list.append(probs_anti_or_non[1]) 
-                                    # st.subheader('✔️ Your peptide is an antimicrobial peptide.')
-                                    # st.text('Probability is '+ str((probs_anti_or_non)[1]))
-                                    if (probs_pos[1] >= (int(option_gram)/100)) and (real_probs_nec[1] >= (int(option_gram)/100)):
-                                            # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
-                                            # st.text('Probability is '+ str((probs_pos)[1]))
-                                            # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.')
-                                            # st.text('Probability is '+ str((probs_nec)[1]))
-                                        pos_ro_nec.append('gram+,gram-')
-                                        probs_nec_list.append(probs_pos[1]) 
-                                        probs_poe_list.append(probs_nec[1])
-                                    elif (real_probs_pos[1] >= (int(option_gram)/100)) and (real_probs_nec[1] < (int(option_gram)/100)):
-                                        # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
-                                        # st.text('Probability is '+ str((probs_pos)[1]))
-                                        pos_ro_nec.append('gram+') 
-                                        probs_poe_list.append((probs_pos)[1])
-                                        probs_nec_list.append('-')
-                                    elif (real_probs_pos[1] < (int(option_gram)/100)) and (real_probs_nec[1] >= (int(option_gram)/100)):
-                                            # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.' )
-                                            # st.text('Probability is '+ str((probs_nec)[1]))
-                                        pos_ro_nec.append('gram-')
-                                        probs_poe_list.append('-')   
-                                        probs_nec_list.append((probs_nec)[1])   
-                                    elif (real_probs_pos[1] < (int(option_gram)/100)) and (real_probs_nec[1] < (int(option_gram)/100)):
-                                            # st.success(' 󠀠 󠀠✔️ 󠀠 Resist other gram of bacteria.')
-                                        pos_ro_nec.append('other gram')
-                                        probs_nec_list.append((probs_nec)[1]) 
-                                        probs_poe_list.append((probs_pos)[1])                                                                                
-                                        
-                                elif real_probs_anti_or_non[1] < (int(option_anti)/100):                                        
-                                    anti_or_non.append('non antimicrobial')
-                                    pos_ro_nec.append("-")
-                                    probs_anti_or_non_list.append(probs_anti_or_non[1])
-                                    probs_nec_list.append('-') 
-                                    probs_poe_list.append('-')
-                                        # st.subheader('❌ Your peptide is non antimicrobial peptide.')
-                                        # st.text('Probability is '+ str((probs_anti_or_non)[0]))
-                                                                    
-                                return anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list
-        
+                            
                             len_list = []                        
                             hydrophobic_list = []
                             hydrophilic_list = [] 
