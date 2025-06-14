@@ -253,14 +253,6 @@ class PredictApp(HydraHeadApp):
                                     list2.append(seq[i])                              
 
                             df_user_name_seq = pd.DataFrame(list(zip(list1,list2)),columns =['Name','Sequence'])
-                            progress_text = "Operation in progress. Please wait."
-                            my_bar = st.progress(0, text=progress_text)
-                            
-                            for percent_complete in range(100):
-                                time.sleep(0.01)
-                                my_bar.progress(percent_complete/len(df_user_name_seq), text=progress_text)
-                            time.sleep(1)
-                            my_bar.empty()
                          
                             def CalRasidal(smi):
                                 A = smi.count('A')
@@ -662,6 +654,14 @@ class PredictApp(HydraHeadApp):
                                 # <h1 style="color:{};text-align:center;">Dataframe of predict your peptide</h1>
                                 l_col1, l_col2, lasti = st.columns((0.60,12,0.6))
 
+                                progress_text = "Operation in progress. Please wait."
+                                my_bar = st.progress(0, text=progress_text)
+                                
+                                for percent_complete in range(100):
+                                    time.sleep(0.01)
+                                    my_bar.progress(percent_complete/len(df_user_name_seq), text=progress_text)
+                                time.sleep(1)
+                                my_bar.empty()
 
                                 with l_col2:
                                     if len(df_ant_non_normed) <= 50:
