@@ -660,7 +660,7 @@ class PredictApp(HydraHeadApp):
                                     if len(df_ant_non_normed) <= 50:
                                         for i in range(len(df_ant_non_normed)):                                   
                                             time.sleep(0.01)
-                                            my_bar.progress((i*100)/len(df_use_in_model), text=progress_text)
+                                            my_bar.progress(100*i/len(df_use_in_model), text=progress_text)
                                             with open('style2.css') as f:
                                                 with st.expander('Describe detail information'):
                                                     st.info(
@@ -1029,7 +1029,7 @@ class PredictApp(HydraHeadApp):
                                                     </style>""", unsafe_allow_html=True)
                                     elif len(df_ant_non_normed) > 50 :
                                         for i in range(len(df_ant_non_normed)):
-                                            my_bar.progress((i*100)/len(df_use_in_model), text=progress_text)
+                                            my_bar.progress(100*i/len(df_use_in_model), text=progress_text)
                                             anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list = use_model(df_ant_non_normed.iloc[[i]], df_pos_nec_normed.iloc[[i]])
                                         time.sleep(1)
                                         my_bar.empty()   
