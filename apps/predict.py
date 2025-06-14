@@ -659,7 +659,7 @@ class PredictApp(HydraHeadApp):
                                 
                                 for percent_complete in range(100):
                                     time.sleep(0.01)
-                                    my_bar.progress(percent_complete/len(df_user_name_seq), text=progress_text)
+                                    my_bar.progress(percent_complete/len(df_use_in_model), text=progress_text)
                                 time.sleep(1)
                                 my_bar.empty()
 
