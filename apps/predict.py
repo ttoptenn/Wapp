@@ -653,345 +653,345 @@ class PredictApp(HydraHeadApp):
                                         
                                 # <h1 style="color:{};text-align:center;">Dataframe of predict your peptide</h1>
                                 l_col1, l_col2, lasti = st.columns((0.60,12,0.6))
-
-                                progress_text = "Operation in progress. Please wait."
+                                
+                              progress_text = "Operation in progress. Please wait."
                                 my_bar = st.progress(0, text=progress_text)
                                 
                                 for percent_complete in range(100):
                                     time.sleep(0.01)
-                                    my_bar.progress(percent_complete/len(df_use_in_model), text=progress_text)
-                                time.sleep(1)
-                                my_bar.empty()
-
-                                with l_col2:
-                                    if len(df_ant_non_normed) <= 50:
-                                        for i in range(len(df_ant_non_normed)):
-                                            
-                                            with open('style2.css') as f:
-                                                with st.expander('Describe detail information'):
-                                                    st.info(
-                                                            """ 
-                                                                - Name = Name of your sequence peptide.
-                                                                - Probability = The probability that your peptide is antimicrobial peptide.
-                                                                - Feature = Feature of your sequence peptide.
-                                                                - Similarity = The Similarity of your peptide compare with another peptide such as antimicrobial peptide e.g. Defensin, Drosocin, Spaetzle, or non-antimicrobial e.g. B-RAF, Hemoglobin, Keratin.
-                                                                - Identity = The distinguish character of your peptide compared with another peptide.
-                                                                - Gaps = A break or space in the peptide compared with other peptide
-                                                                """)
-                                                st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-                                                
-                                                cc1,cc2,cc3,cc4,cc5,cc6 = st.columns((4,4,3,3,3,3))
-
-                                                cc1.write("""<style>.font-family: Poppins, sans-serif; {font-size:15px !important;}</style>""", unsafe_allow_html=True)
-                                                cc1.write('👉🏻 Name: '+ df_user_name_seq['Name'][i])
-                                                cc1.write('👉🏻 Sequence: '+ df_user_name_seq['Sequence'][i])
-                                                
-                                                # Predict result form model
-                                                html_temp = """
-                                                            <div style="background-color:{};height:{};width:{};">
-                                                            </div>
-                                                            <div style="background-color:#1F3D7C;color:white;padding:2px;border-radius:5px">
-                                                            <div id="head" style="background-color:{};padding:2px;border-radius:'5px';">
-                                                            </div>
-                                                            """
-                                                
-                                            with cc2: 
-                                                # st.write("##")
-                                                # st.markdown(html_temp.format('white','2px', '60%','#1F3D7C','#FFFFFF'),unsafe_allow_html=True)
-
-                                                anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list = use_model(df_ant_non_normed.iloc[[i]], df_pos_nec_normed.iloc[[i]])
-                                                
-                                                if anti_or_non[i] == 'antimicrobial':
+                                    my_bar.progress(percent_complete/len(df_ant_non_normed), text=progress_text)
+                                
+                                   with l_col2:
+                                       if len(df_ant_non_normed) <= 50:
+                                           for i in range(len(df_ant_non_normed)):
+                                               
+                                               with open('style2.css') as f:
+                                                   with st.expander('Describe detail information'):
+                                                       st.info(
+                                                               """ 
+                                                                   - Name = Name of your sequence peptide.
+                                                                   - Probability = The probability that your peptide is antimicrobial peptide.
+                                                                   - Feature = Feature of your sequence peptide.
+                                                                   - Similarity = The Similarity of your peptide compare with another peptide such as antimicrobial peptide e.g. Defensin, Drosocin, Spaetzle, or non-antimicrobial e.g. B-RAF, Hemoglobin, Keratin.
+                                                                   - Identity = The distinguish character of your peptide compared with another peptide.
+                                                                   - Gaps = A break or space in the peptide compared with other peptide
+                                                                   """)
+                                                   st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
                                                    
-                                                    # st.code('✔️ 󠀠'+ anti_or_non[i])
-                                                    # st.write('Probability is:'+ " 󠀠 󠀠 󠀠 "+ str(probs_anti_or_non_list[i]))
-                                                    # st.code('Active against')
-                                                    # Ideala = '<div align="left"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #1F3D7C; border-radius: 5px; text-align:center;">Please enter your peptide or File upload 👇</p>'
-                                                    potential_anti = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 󠀠 Probability: 󠀠 󠀠 󠀠 𝒀𝒆𝒔✔️</p>'
-                                                    st.markdown(potential_anti, unsafe_allow_html=True)
-                                                    # st.markdown('Potential to be AMPs:'+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 󠀠✔️')
-                                                    st.write('Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_anti_or_non_list[i]))
-                                                    potential_targ = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 󠀠 Target Bacteria</p>'
-                                                    st.markdown(potential_targ, unsafe_allow_html=True)
-                                                    # st.code('Target Bacteria')
-
-                                                    if pos_ro_nec[i] == 'gram+,gram-':
-                                                        st.write('Potential againt Gram + Bacteria:'+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 󠀠✔️'+ " 󠀠 󠀠 󠀠 "+ 'Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_poe_list[i]))
-                                                        # st.write('Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_poe_list[i]))
-                                                        # st.write("gram+"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
-                                                        st.write('Potential againt Gram - Bacteria:'+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 ✔️'+ " 󠀠 󠀠 󠀠 "+ 'Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_nec_list[i]))
-                                                        # st.write('Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_poe_list[i]))
-                                                        # st.write("gram-"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
-                                                    elif pos_ro_nec[i] == 'gram+':
-                                                        st.write("Potential againt Gram + Bacteria:"+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 ✔️'+ " 󠀠 󠀠 󠀠 "+'Probability:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
-                                                    elif pos_ro_nec[i] == 'gram-':
-                                                        st.write("Potential againt Gram - Bacteria:"+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 ✔️'+ " 󠀠 󠀠 󠀠 "+'Probability:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
-                                                elif anti_or_non[i] == 'non antimicrobial':
-                                                    # st.markdown('Potential to be AMPs:'+ " 󠀠 󠀠 󠀠 "+'𝑵𝒐❌ 󠀠')
-                                                    potential_non = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 Probability:  󠀠 󠀠 󠀠 𝑵𝒐 ❌ 󠀠 </p>'
-                                                    st.markdown(potential_non, unsafe_allow_html=True)
-                                                    st.write('Probability:'+ " 󠀠 󠀠 󠀠 "+ str(probs_anti_or_non_list[i])) 
-                                                    
-                                            
-                                                # if pos_ro_nec[i] == 'gram+,gram-':
-                                                #     st.write("gram+"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
-                                                #     st.write("gram-"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
-                                                # elif pos_ro_nec[i] == 'gram+':
-                                                #     st.write("gram+"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
-                                                # elif pos_ro_nec[i] == 'gram-':
-                                                #     st.write("gram-"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
-                                                
-                                                
-                                                # st.write(probs_nec_list[i])
-                                                # st.write(probs_poe_list[i])
-                                                # st.markdown(html_temp.format('white','1px', '60%','#1F3D7C','#FFFFFF'),unsafe_allow_html=True)   
-                                        
-                                            # display result --------------------------------------------------------------------------
-                                            # with st.container():
-                                            #     left_col1, left_col2, center, right_col1, right_col2,last = st.columns((0.50,5.5,8,8,8,0.3))
-                                            with cc3:
-                                                # help_feature="Feature of your peptide \n"
-                                                # with st.expander("Feature"):
-                                                #     st.info('The identity of your peptide compare identity with another peptide.')
-                                                # st.code('Feature')
-                                                mark_Feature = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:center;"> 󠀠 󠀠Feature 󠀠 </p>'
-                                                st.markdown(mark_Feature, unsafe_allow_html=True)
-                                                #show Sequence len-------------------------------
-                                                st.write('🔻 Sequence len: '+ str(len_list[i]), unsafe_allow_html=True)
-
-                                                        #show Hydrophobic-------------------------------
-                                                st.write('🔻 Hydrophobic: '+ (hydrophobic_list[i]), unsafe_allow_html=True)
-
-                                                        #show Hydrophilic-------------------------------
-                                                st.write('🔻 Hydrophilic: '+ (hydrophilic_list[i]), unsafe_allow_html=True)
-                                            
-                                            with cc4:
-                                                # st.code('Similarity Comparison')
-                                                mark_Similarity = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:center;"> 󠀠 Similarity Comparison 󠀠 </p>'
-                                                st.markdown(mark_Similarity, unsafe_allow_html=True)
-                                                st.write('Defensin is: '+ str(list_sim_align[0])+"%")    
-                                                st.write('Drosocin is: '+ str(list_sim_align[1])+"%")
-                                                st.write('Spaetzle is: '+ str(list_sim_align[2])+"%")
-                                            with cc5:
-                                                # st.code('Identity Comparison')
-                                                mark_Identity = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:center;"> 󠀠 Identity Comparison 󠀠 </p>'
-                                                st.markdown(mark_Identity, unsafe_allow_html=True)
-                                                st.write('Defensin is: '+ str(list_iden_align[0])+"%")    
-                                                st.write('Drosocin is: '+ str(list_iden_align[1])+"%")
-                                                st.write('Spaetzle is: '+ str(list_iden_align[2])+"%")
-                                            with cc6:
-                                                # st.code('Gaps Comparison')
-                                                mark_Gaps = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:center;"> 󠀠 Gaps Comparison 󠀠 </p>'
-                                                st.markdown(mark_Gaps, unsafe_allow_html=True)
-                                                st.write('Defensin is: '+ str(list_gaps_align[0])+"%")    
-                                                st.write('Drosocin is: '+ str(list_gaps_align[1])+"%")
-                                                st.write('Spaetzle is: '+ str(list_gaps_align[2])+"%")
-
-                                            with open('style2.css') as f:
-                                                st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-                                                with st.expander('🔵 󠀠 󠀠Select for more detail...'):
-                                                    with open('style2.css') as f:
-                                                        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-                                                        ff1,ff2,ff4 = st.columns((8,9,1))
-                                                        with ff2:
-                                                            Ideal_Feature = '<div align="center"><p style="font-family:; color:#1F3D7C; font-size: 18px; background-color: #C2DFFF;">Feature</p>'
-                                                            st.markdown(Ideal_Feature, unsafe_allow_html=True)
-                                                    cooll1, cooll2, cooll3,cooll4,cooll5,cooll6 = st.columns((0.60,6.5,3.5,0.5,3.5,1.1))
-                                                    with cooll2:
-                                                        st.write('👉🏻 Name: '+ df_user_name_seq['Name'][i])
-                                                        st.write('👉🏻 Sequence: '+ df_user_name_seq['Sequence'][i])
-                                                        if anti_or_non[i] == 'antimicrobial':
-                                                            # st.code('✔️ 󠀠'+ anti_or_non[i])
-                                                            # st.write('Probability is:'+ " 󠀠 󠀠 󠀠 "+ str(probs_anti_or_non_list[i]))
-                                                            # st.code('Active against')
-                                                            potential_anti2 = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 󠀠 Probability: 󠀠 󠀠 󠀠 𝒀𝒆𝒔✔️</p>'
-                                                            st.markdown(potential_anti2, unsafe_allow_html=True)
-                                                            st.write('A probability threshold of:'+ " 󠀠 󠀠 󠀠 " + option_anti + " 󠀠 󠀠 󠀠 " + " is "+ " 󠀠 󠀠 󠀠 " +str(probs_anti_or_non_list[i]))
-                                                            potential_targ2 = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 󠀠 Target Bacteria</p>'
-                                                            st.markdown(potential_targ2, unsafe_allow_html=True)
-                                                            st.write('A probability threshold of:'+ " 󠀠 󠀠 󠀠 " + option_gram)
-
-                                                            if pos_ro_nec[i] == 'gram+,gram-':
-                                                                st.write('Potential againt Gram + Bacteria:'+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 󠀠✔️'+ " 󠀠 󠀠 󠀠 "+ 'Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_poe_list[i]))
-                                                                st.write('Potential againt Gram - Bacteria:'+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 ✔️'+ " 󠀠 󠀠 󠀠 "+ 'Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_nec_list[i]))
-                                                                # st.write("✔️ 󠀠gram+"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
-                                                                # st.write("✔️ 󠀠gram-"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
-                                                            elif pos_ro_nec[i] == 'gram+':
-                                                                # st.write("✔️ 󠀠gram+"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
-                                                                st.write("Potential againt Gram + Bacteria:"+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 󠀠✔️'+'Probability:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
-                                                            elif pos_ro_nec[i] == 'gram-':
-                                                                # st.write("✔️ 󠀠gram-"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
-                                                                st.write("Potential againt Gram - Bacteria:"+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 󠀠✔️'+'Probability:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
-                                                        elif anti_or_non[i] == 'non antimicrobial':
-                                                            # st.code('❌ 󠀠'+ anti_or_non[i])
-                                                            # st.write('Probability is:'+ " 󠀠 󠀠 󠀠 "+ str(probs_anti_or_non_list[i]))
-                                                            potential_non2 = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 󠀠Probability:  󠀠 󠀠 󠀠 𝑵𝒐 ❌ 󠀠 </p>'
-                                                            st.markdown(potential_non2, unsafe_allow_html=True)
-                                                            st.write('A probability threshold of:'+ " 󠀠 󠀠 󠀠 " + option_anti + " 󠀠 󠀠 󠀠 " + " is "+ str(probs_anti_or_non_list[i])) 
-                                                        # if anti_or_non[i] == "antimicrobial":
-                                                        #     st.subheader('✔️ Your peptide is an antimicrobial peptide.')
-                                                        #     st.text('Probability is '+ str((probs_anti_or_non_list)[i]))
-                                                        #     if (pos_ro_nec[i] == "gram+,gram-"):
-                                                        #         st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
-                                                        #         st.text('Probability is '+ str((probs_poe_list)[i]))
-                                                        #         st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.')
-                                                        #         st.text('Probability is '+ str((probs_nec_list)[i]))
-                                                            
-                                                        #     elif (pos_ro_nec[i] == "gram+"):
-                                                        #         st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
-                                                        #         st.text('Probability is '+ str((probs_poe_list)[i]))
-                                                            
-                                                        #     elif (pos_ro_nec[i] == "gram-"):
-                                                        #         st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.' )
-                                                        #         st.text('Probability is '+ str((probs_nec_list)[i]))
-                                                            
-                                                        #     else:
-                                                        #         st.success(' 󠀠 󠀠✔️ 󠀠 Resist other gram of bacteria.')
-
-                                                        # elif anti_or_non[i] == "non antimicrobial":                                                
-                                                        #     st.subheader('❌ Your peptide is non antimicrobial peptide.')
-                                                        #     st.text('Probability is '+ str((probs_anti_or_non_list)[i]))
-                                                        # anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list = use_model(df_ant_non_normed.iloc[[i]], df_pos_nec_normed.iloc[[i]])
-                                                    # feature of peptide --------------------------------------------------------------------------------
-                                                    with cooll3:
-                                                        
-                                                        st.info('🔻 Sequence len: '+ str(len_list[i]))
-                                                        st.info('🔻 Hydrophobic: '+ (hydrophobic_list[i]))
-                                                        st.info('🔻 Hydrophilic: '+ (hydrophilic_list[i]))
-                                                        st.info('🔻 Uncharged: '+ uncharged_list[i])
-                                                        #show Positive charge-------------------------------
-                                                        st.info('🔻 Positive charge: '+ positive_charge_list[i])
-
-                                                    with cooll5:
-                                                            #show Negative charge-------------------------------
-                                                        st.info('🔻 Negative charge: '+ Negative_charge_list[i])
-
-                                                            #show Molecular Weight-------------------------------
-                                                        st.info('🔻 Molecular Weight: '+ Molecular_Weight_list[i])
-
-                                                            #show Isoelectric Point-------------------------------
-                                                        st.info('🔻 Isoelectric Point: '+ pI_list[i])
-
-                                                            #show score hydrophilic-------------------------------
-                                                        st.info('🔻 Score hydrophilic: '+ score_hydrophilic_list[i])
-
-                                                            #show Score hydrophobic-------------------------------
-                                                        st.info('🔻 Score hydrophobic: '+ Score_hydrophobic_list[i])
-                                                    # ("Similarity")
-                                                    #     st.info('The similarity of your peptide compare %similarity with another peptide.')
-                                                # list_sim_align,  list_iden_align, list_gaps_align = align_sequences(Sequence) list_c_sim, list_matches, list_gaps_al, list_len_al
-                                                    with open('style2.css') as f:
-                                                        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-                                                        ff01,ff02,ff03,ff04,ff05,ff06,ff07 = st.columns((1,4,0.5,4,0.5,4,1))
-                                                        with ff02:
-                                                            Ideal_Feature = '<div align="center"><p style="font-family:; color:#1F3D7C; font-size: 18px; background-color: #C2DFFF;">Similarity Comparison</p>'
-                                                            st.markdown(Ideal_Feature, unsafe_allow_html=True)
-                                                    
-                                                            st.write('Defensin peptide is: ' + str(list_c_sim[0]) + '/' + str(list_len_al[0]) + '=' + str(list_sim_align[0])+ '%')    
-                                                            st.write('Drosocin peptide is: ' + str(list_c_sim[1]) + '/' + str(list_len_al[1]) + '=' + str(list_sim_align[1])+ '%')
-                                                            st.write('Spaetzle peptide is: ' + str(list_c_sim[2]) + '/' + str(list_len_al[2]) + '=' + str(list_sim_align[2])+ '%')
-                                                            st.write('B-RAF peptide is: ' + str(list_c_sim[3]) + '/' + str(list_len_al[3]) + '=' + str(list_sim_align[3])+ '%')
-                                                            st.write('Hemoglobin peptide is: '+ str(list_c_sim[4]) + '/' + str(list_len_al[4]) + '=' + str(list_sim_align[4])+ '%')
-                                                            st.write('Keratin peptide is: '+ str(list_c_sim[5]) + '/' + str(list_len_al[5]) + '=' + str(list_sim_align[5])+ '%')
-                                                    # with st.expander("Identity"):
-                                                    #     st.info('The identity of your peptide compare identity with another peptide.')
-                                                    # list_sim_align,  list_iden_align, list_gaps_align = align_sequences(Sequence) 
-                                                        with ff04:
-                                                            Ideal_Feature = '<div align="center"><p style="font-family:; color:#1F3D7C; font-size: 18px; background-color: #C2DFFF;">Identity Comparison</p>'
-                                                            st.markdown(Ideal_Feature, unsafe_allow_html=True)
-
-                                                            st.write('Defensin peptide is: ' + str(list_matches[0]) + '/' + str(list_len_al[0]) + '=' +  str(list_iden_align[0])+ '%')    
-                                                            st.write('Drosocin peptide is: ' + str(list_matches[1]) + '/' + str(list_len_al[1]) + '=' +  str(list_iden_align[1])+ '%')
-                                                            st.write('Spaetzle peptide is: ' + str(list_matches[2]) + '/' + str(list_len_al[2]) + '=' +  str(list_iden_align[2])+ '%')
-                                                            st.write('B-RAF peptide is: ' + str(list_matches[3]) + '/' + str(list_len_al[3]) + '=' +  str(list_iden_align[3])+ '%')
-                                                            st.write('Hemoglobin peptide is: ' + str(list_matches[4]) + '/' + str(list_len_al[4]) + '=' +  str(list_iden_align[4])+ '%')
-                                                            st.write('Keratin peptide is: ' + str(list_matches[5]) + '/' + str(list_len_al[5]) + '=' +  str(list_iden_align[5])+ '%')
-                                                            
-                                                    # with st.expander("Gaps"):
-                                                    #     st.info('The gaps of your peptide compare gaps with another peptide.')
-                                                    # # list_sim_align,  list_iden_align, list_gaps_align = align_sequences(Sequence)
-                                                        with ff06:
-                                                            Ideal_Feature = '<div align="center"><p style="font-family:; color:#1F3D7C; font-size: 18px; background-color: #C2DFFF;">Gaps Comparison</p>'
-                                                            st.markdown(Ideal_Feature, unsafe_allow_html=True) 
-
-                                                            st.write('Defensin peptide is: ' + str(list_gaps_al[0]) + '/' + str(list_len_al[0]) + '=' +  str(list_gaps_align[0])+ '%')    
-                                                            st.write('Drosocin peptide is: ' + str(list_gaps_al[1]) + '/' + str(list_len_al[1]) + '=' +  str(list_gaps_align[1])+ '%')
-                                                            st.write('Spaetzle peptide is: ' + str(list_gaps_al[2]) + '/' + str(list_len_al[2]) + '=' +  str(list_gaps_align[2])+ '%')
-                                                            st.write('B-RAF peptide is: ' + str(list_gaps_al[3]) + '/' + str(list_len_al[3]) + '=' +  str(list_gaps_align[3])+ '%')
-                                                            st.write('Hemoglobin peptide is: ' + str(list_gaps_al[4]) + '/' + str(list_len_al[4]) + '=' +  str(list_gaps_align[4])+ '%')
-                                                            st.write('Keratin peptide is: ' + str(list_gaps_al[5]) + '/' + str(list_len_al[5]) + '=' +  str(list_gaps_align[5])+ '%')
-
-                                                    # Graph show amino acid ---------------------------------------------------------------
-                                                    c1,c2,c3 = st.columns((4,10,4))
-                                                    with c2:
-                                                        num_R = df_user_name_seq['Sequence'][i].count('R')
-                                                        num_N = df_user_name_seq['Sequence'][i].count('N')
-                                                        num_D = df_user_name_seq['Sequence'][i].count('D')
-                                                        num_Q = df_user_name_seq['Sequence'][i].count('Q')
-                                                        num_E = df_user_name_seq['Sequence'][i].count('E')
-                                                        num_K = df_user_name_seq['Sequence'][i].count('K')
-
-                                                        num_H = df_user_name_seq['Sequence'][i].count('H')
-                                                        num_S = df_user_name_seq['Sequence'][i].count('S')
-                                                        num_T = df_user_name_seq['Sequence'][i].count('T')
-                                                        num_A = df_user_name_seq['Sequence'][i].count('A')
-                                                        num_C = df_user_name_seq['Sequence'][i].count('C')
-                                                        num_F = df_user_name_seq['Sequence'][i].count('F')
-                                                        num_G = df_user_name_seq['Sequence'][i].count('G')
-                                                        num_I = df_user_name_seq['Sequence'][i].count('I')
-                                                        num_L = df_user_name_seq['Sequence'][i].count('L')
-                                                        num_M = df_user_name_seq['Sequence'][i].count('M')
-                                                        num_P = df_user_name_seq['Sequence'][i].count('P')
-                                                        num_V = df_user_name_seq['Sequence'][i].count('V')
-                                                        num_W = df_user_name_seq['Sequence'][i].count('W')
-                                                        num_Y = df_user_name_seq['Sequence'][i].count('Y')
-
-                                                        df = pd.DataFrame(
-                                                        dict(
-                                                            hi_ = [num_R, num_N, num_D, num_Q, num_E, num_K, num_H, num_S, num_T, num_A, num_C, num_F, num_G, num_I, num_L, num_M, num_P, num_V, num_W, num_Y],
-                                                            bar_labels = ['R','N','D','Q','E', 'K', 'H', 'S', 'T', 'A', 'C', 'F', 'G', 'I', 'L', 'M', 'P', 'V', 'W', 'Y']
-                                                        )
-                                                        )
-                                                        
-
-                                                        df_sorted = df.sort_values('hi_', ascending=False)
-                                                                                                
-                                                        # def check_freq(x):
-                                                        #     freq = {}
-                                                        #     for c in set(x):
-                                                        #         freq[c] = x.count(c)
-                                                        #     return freq
-
-                                                        # freq = check_freq(df_user_name_seq['Sequence'][i])
-                                                        # st.write(type(freq))
-                                                        # df1 = pd.DataFrame(list(freq.items())).T
-                                                        # df1.columns = df1.iloc[0]
-                                                                                                    
-                                                        # st.dataframe(df1)
-                                                        font = {'size': 4}
-                                                        # using rc function
-                                                        plt.rc('font', **font)
-                                                        f, ax = plt.subplots(figsize=(3,1))                                          
-                                                        plt.xlabel('amino acid numbers', fontsize=4)
-                                                        plt.ylabel('amino acid', fontsize=4)
-                                                        plt.title("Amino acid counting diagram", fontsize=5)
-                                                        plt.bar('bar_labels', 'hi_', data= df_sorted, color='#1F3D7C')
-                                                        
-                                                    
-                                                        st.pyplot(plt)
+                                                   cc1,cc2,cc3,cc4,cc5,cc6 = st.columns((4,4,3,3,3,3))
    
-                                            st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-                                                                                                
-                                        # show Dataframe of predict your peptide----------------------------------------------------------------------------------  
-                                        df_user_name_seq['Predict_Peptide'] = anti_or_non
-                                        df_user_name_seq['Probability_Peptide'] = probs_anti_or_non_list
-                                        df_user_name_seq['Resist_Gram'] = pos_ro_nec
-                                        df_user_name_seq['Probability_Negative'] = probs_nec_list
-                                        df_user_name_seq['Probability_Positive'] = probs_poe_list
-                                       
+                                                   cc1.write("""<style>.font-family: Poppins, sans-serif; {font-size:15px !important;}</style>""", unsafe_allow_html=True)
+                                                   cc1.write('👉🏻 Name: '+ df_user_name_seq['Name'][i])
+                                                   cc1.write('👉🏻 Sequence: '+ df_user_name_seq['Sequence'][i])
+                                                   
+                                                   # Predict result form model
+                                                   html_temp = """
+                                                               <div style="background-color:{};height:{};width:{};">
+                                                               </div>
+                                                               <div style="background-color:#1F3D7C;color:white;padding:2px;border-radius:5px">
+                                                               <div id="head" style="background-color:{};padding:2px;border-radius:'5px';">
+                                                               </div>
+                                                               """
+                                                   
+                                               with cc2: 
+                                                   # st.write("##")
+                                                   # st.markdown(html_temp.format('white','2px', '60%','#1F3D7C','#FFFFFF'),unsafe_allow_html=True)
+   
+                                                   anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list = use_model(df_ant_non_normed.iloc[[i]], df_pos_nec_normed.iloc[[i]])
+                                                   
+                                                   if anti_or_non[i] == 'antimicrobial':
+                                                      
+                                                       # st.code('✔️ 󠀠'+ anti_or_non[i])
+                                                       # st.write('Probability is:'+ " 󠀠 󠀠 󠀠 "+ str(probs_anti_or_non_list[i]))
+                                                       # st.code('Active against')
+                                                       # Ideala = '<div align="left"><p style="font-sans-serif:; color: white; font-size: 20px; background-color: #1F3D7C; border-radius: 5px; text-align:center;">Please enter your peptide or File upload 👇</p>'
+                                                       potential_anti = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 󠀠 Probability: 󠀠 󠀠 󠀠 𝒀𝒆𝒔✔️</p>'
+                                                       st.markdown(potential_anti, unsafe_allow_html=True)
+                                                       # st.markdown('Potential to be AMPs:'+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 󠀠✔️')
+                                                       st.write('Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_anti_or_non_list[i]))
+                                                       potential_targ = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 󠀠 Target Bacteria</p>'
+                                                       st.markdown(potential_targ, unsafe_allow_html=True)
+                                                       # st.code('Target Bacteria')
+   
+                                                       if pos_ro_nec[i] == 'gram+,gram-':
+                                                           st.write('Potential againt Gram + Bacteria:'+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 󠀠✔️'+ " 󠀠 󠀠 󠀠 "+ 'Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_poe_list[i]))
+                                                           # st.write('Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_poe_list[i]))
+                                                           # st.write("gram+"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
+                                                           st.write('Potential againt Gram - Bacteria:'+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 ✔️'+ " 󠀠 󠀠 󠀠 "+ 'Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_nec_list[i]))
+                                                           # st.write('Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_poe_list[i]))
+                                                           # st.write("gram-"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
+                                                       elif pos_ro_nec[i] == 'gram+':
+                                                           st.write("Potential againt Gram + Bacteria:"+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 ✔️'+ " 󠀠 󠀠 󠀠 "+'Probability:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
+                                                       elif pos_ro_nec[i] == 'gram-':
+                                                           st.write("Potential againt Gram - Bacteria:"+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 ✔️'+ " 󠀠 󠀠 󠀠 "+'Probability:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
+                                                   elif anti_or_non[i] == 'non antimicrobial':
+                                                       # st.markdown('Potential to be AMPs:'+ " 󠀠 󠀠 󠀠 "+'𝑵𝒐❌ 󠀠')
+                                                       potential_non = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 Probability:  󠀠 󠀠 󠀠 𝑵𝒐 ❌ 󠀠 </p>'
+                                                       st.markdown(potential_non, unsafe_allow_html=True)
+                                                       st.write('Probability:'+ " 󠀠 󠀠 󠀠 "+ str(probs_anti_or_non_list[i])) 
+                                                       
+                                               
+                                                   # if pos_ro_nec[i] == 'gram+,gram-':
+                                                   #     st.write("gram+"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
+                                                   #     st.write("gram-"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
+                                                   # elif pos_ro_nec[i] == 'gram+':
+                                                   #     st.write("gram+"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
+                                                   # elif pos_ro_nec[i] == 'gram-':
+                                                   #     st.write("gram-"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
+                                                   
+                                                   
+                                                   # st.write(probs_nec_list[i])
+                                                   # st.write(probs_poe_list[i])
+                                                   # st.markdown(html_temp.format('white','1px', '60%','#1F3D7C','#FFFFFF'),unsafe_allow_html=True)   
+                                           
+                                               # display result --------------------------------------------------------------------------
+                                               # with st.container():
+                                               #     left_col1, left_col2, center, right_col1, right_col2,last = st.columns((0.50,5.5,8,8,8,0.3))
+                                               with cc3:
+                                                   # help_feature="Feature of your peptide \n"
+                                                   # with st.expander("Feature"):
+                                                   #     st.info('The identity of your peptide compare identity with another peptide.')
+                                                   # st.code('Feature')
+                                                   mark_Feature = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:center;"> 󠀠 󠀠Feature 󠀠 </p>'
+                                                   st.markdown(mark_Feature, unsafe_allow_html=True)
+                                                   #show Sequence len-------------------------------
+                                                   st.write('🔻 Sequence len: '+ str(len_list[i]), unsafe_allow_html=True)
+   
+                                                           #show Hydrophobic-------------------------------
+                                                   st.write('🔻 Hydrophobic: '+ (hydrophobic_list[i]), unsafe_allow_html=True)
+   
+                                                           #show Hydrophilic-------------------------------
+                                                   st.write('🔻 Hydrophilic: '+ (hydrophilic_list[i]), unsafe_allow_html=True)
+                                               
+                                               with cc4:
+                                                   # st.code('Similarity Comparison')
+                                                   mark_Similarity = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:center;"> 󠀠 Similarity Comparison 󠀠 </p>'
+                                                   st.markdown(mark_Similarity, unsafe_allow_html=True)
+                                                   st.write('Defensin is: '+ str(list_sim_align[0])+"%")    
+                                                   st.write('Drosocin is: '+ str(list_sim_align[1])+"%")
+                                                   st.write('Spaetzle is: '+ str(list_sim_align[2])+"%")
+                                               with cc5:
+                                                   # st.code('Identity Comparison')
+                                                   mark_Identity = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:center;"> 󠀠 Identity Comparison 󠀠 </p>'
+                                                   st.markdown(mark_Identity, unsafe_allow_html=True)
+                                                   st.write('Defensin is: '+ str(list_iden_align[0])+"%")    
+                                                   st.write('Drosocin is: '+ str(list_iden_align[1])+"%")
+                                                   st.write('Spaetzle is: '+ str(list_iden_align[2])+"%")
+                                               with cc6:
+                                                   # st.code('Gaps Comparison')
+                                                   mark_Gaps = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:center;"> 󠀠 Gaps Comparison 󠀠 </p>'
+                                                   st.markdown(mark_Gaps, unsafe_allow_html=True)
+                                                   st.write('Defensin is: '+ str(list_gaps_align[0])+"%")    
+                                                   st.write('Drosocin is: '+ str(list_gaps_align[1])+"%")
+                                                   st.write('Spaetzle is: '+ str(list_gaps_align[2])+"%")
+   
+                                               with open('style2.css') as f:
+                                                   st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+                                                   with st.expander('🔵 󠀠 󠀠Select for more detail...'):
+                                                       with open('style2.css') as f:
+                                                           st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+                                                           ff1,ff2,ff4 = st.columns((8,9,1))
+                                                           with ff2:
+                                                               Ideal_Feature = '<div align="center"><p style="font-family:; color:#1F3D7C; font-size: 18px; background-color: #C2DFFF;">Feature</p>'
+                                                               st.markdown(Ideal_Feature, unsafe_allow_html=True)
+                                                       cooll1, cooll2, cooll3,cooll4,cooll5,cooll6 = st.columns((0.60,6.5,3.5,0.5,3.5,1.1))
+                                                       with cooll2:
+                                                           st.write('👉🏻 Name: '+ df_user_name_seq['Name'][i])
+                                                           st.write('👉🏻 Sequence: '+ df_user_name_seq['Sequence'][i])
+                                                           if anti_or_non[i] == 'antimicrobial':
+                                                               # st.code('✔️ 󠀠'+ anti_or_non[i])
+                                                               # st.write('Probability is:'+ " 󠀠 󠀠 󠀠 "+ str(probs_anti_or_non_list[i]))
+                                                               # st.code('Active against')
+                                                               potential_anti2 = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 󠀠 Probability: 󠀠 󠀠 󠀠 𝒀𝒆𝒔✔️</p>'
+                                                               st.markdown(potential_anti2, unsafe_allow_html=True)
+                                                               st.write('A probability threshold of:'+ " 󠀠 󠀠 󠀠 " + option_anti + " 󠀠 󠀠 󠀠 " + " is "+ " 󠀠 󠀠 󠀠 " +str(probs_anti_or_non_list[i]))
+                                                               potential_targ2 = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 󠀠 Target Bacteria</p>'
+                                                               st.markdown(potential_targ2, unsafe_allow_html=True)
+                                                               st.write('A probability threshold of:'+ " 󠀠 󠀠 󠀠 " + option_gram)
+   
+                                                               if pos_ro_nec[i] == 'gram+,gram-':
+                                                                   st.write('Potential againt Gram + Bacteria:'+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 󠀠✔️'+ " 󠀠 󠀠 󠀠 "+ 'Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_poe_list[i]))
+                                                                   st.write('Potential againt Gram - Bacteria:'+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 ✔️'+ " 󠀠 󠀠 󠀠 "+ 'Probability:'+ " 󠀠 󠀠 󠀠 " + str(probs_nec_list[i]))
+                                                                   # st.write("✔️ 󠀠gram+"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
+                                                                   # st.write("✔️ 󠀠gram-"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
+                                                               elif pos_ro_nec[i] == 'gram+':
+                                                                   # st.write("✔️ 󠀠gram+"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
+                                                                   st.write("Potential againt Gram + Bacteria:"+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 󠀠✔️'+'Probability:'+ " 󠀠 󠀠 󠀠 "+str(probs_poe_list[i]))
+                                                               elif pos_ro_nec[i] == 'gram-':
+                                                                   # st.write("✔️ 󠀠gram-"+ " 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠 󠀠"+'Probability is:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
+                                                                   st.write("Potential againt Gram - Bacteria:"+ " 󠀠 󠀠 󠀠 " + ' 𝒀𝒆𝒔 󠀠✔️'+'Probability:'+ " 󠀠 󠀠 󠀠 "+str(probs_nec_list[i]))
+                                                           elif anti_or_non[i] == 'non antimicrobial':
+                                                               # st.code('❌ 󠀠'+ anti_or_non[i])
+                                                               # st.write('Probability is:'+ " 󠀠 󠀠 󠀠 "+ str(probs_anti_or_non_list[i]))
+                                                               potential_non2 = '<div align="center"><p style="font-sans-serif:; color:white; font-size: 16px; background-color: #1F3D7C; border: 2px solid #06BBCC; border-radius: 5px; text-align:left;"> 󠀠 󠀠Probability:  󠀠 󠀠 󠀠 𝑵𝒐 ❌ 󠀠 </p>'
+                                                               st.markdown(potential_non2, unsafe_allow_html=True)
+                                                               st.write('A probability threshold of:'+ " 󠀠 󠀠 󠀠 " + option_anti + " 󠀠 󠀠 󠀠 " + " is "+ str(probs_anti_or_non_list[i])) 
+                                                           # if anti_or_non[i] == "antimicrobial":
+                                                           #     st.subheader('✔️ Your peptide is an antimicrobial peptide.')
+                                                           #     st.text('Probability is '+ str((probs_anti_or_non_list)[i]))
+                                                           #     if (pos_ro_nec[i] == "gram+,gram-"):
+                                                           #         st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
+                                                           #         st.text('Probability is '+ str((probs_poe_list)[i]))
+                                                           #         st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.')
+                                                           #         st.text('Probability is '+ str((probs_nec_list)[i]))
+                                                               
+                                                           #     elif (pos_ro_nec[i] == "gram+"):
+                                                           #         st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
+                                                           #         st.text('Probability is '+ str((probs_poe_list)[i]))
+                                                               
+                                                           #     elif (pos_ro_nec[i] == "gram-"):
+                                                           #         st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.' )
+                                                           #         st.text('Probability is '+ str((probs_nec_list)[i]))
+                                                               
+                                                           #     else:
+                                                           #         st.success(' 󠀠 󠀠✔️ 󠀠 Resist other gram of bacteria.')
+   
+                                                           # elif anti_or_non[i] == "non antimicrobial":                                                
+                                                           #     st.subheader('❌ Your peptide is non antimicrobial peptide.')
+                                                           #     st.text('Probability is '+ str((probs_anti_or_non_list)[i]))
+                                                           # anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list = use_model(df_ant_non_normed.iloc[[i]], df_pos_nec_normed.iloc[[i]])
+                                                       # feature of peptide --------------------------------------------------------------------------------
+                                                       with cooll3:
+                                                           
+                                                           st.info('🔻 Sequence len: '+ str(len_list[i]))
+                                                           st.info('🔻 Hydrophobic: '+ (hydrophobic_list[i]))
+                                                           st.info('🔻 Hydrophilic: '+ (hydrophilic_list[i]))
+                                                           st.info('🔻 Uncharged: '+ uncharged_list[i])
+                                                           #show Positive charge-------------------------------
+                                                           st.info('🔻 Positive charge: '+ positive_charge_list[i])
+   
+                                                       with cooll5:
+                                                               #show Negative charge-------------------------------
+                                                           st.info('🔻 Negative charge: '+ Negative_charge_list[i])
+   
+                                                               #show Molecular Weight-------------------------------
+                                                           st.info('🔻 Molecular Weight: '+ Molecular_Weight_list[i])
+   
+                                                               #show Isoelectric Point-------------------------------
+                                                           st.info('🔻 Isoelectric Point: '+ pI_list[i])
+   
+                                                               #show score hydrophilic-------------------------------
+                                                           st.info('🔻 Score hydrophilic: '+ score_hydrophilic_list[i])
+   
+                                                               #show Score hydrophobic-------------------------------
+                                                           st.info('🔻 Score hydrophobic: '+ Score_hydrophobic_list[i])
+                                                       # ("Similarity")
+                                                       #     st.info('The similarity of your peptide compare %similarity with another peptide.')
+                                                   # list_sim_align,  list_iden_align, list_gaps_align = align_sequences(Sequence) list_c_sim, list_matches, list_gaps_al, list_len_al
+                                                       with open('style2.css') as f:
+                                                           st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+                                                           ff01,ff02,ff03,ff04,ff05,ff06,ff07 = st.columns((1,4,0.5,4,0.5,4,1))
+                                                           with ff02:
+                                                               Ideal_Feature = '<div align="center"><p style="font-family:; color:#1F3D7C; font-size: 18px; background-color: #C2DFFF;">Similarity Comparison</p>'
+                                                               st.markdown(Ideal_Feature, unsafe_allow_html=True)
+                                                       
+                                                               st.write('Defensin peptide is: ' + str(list_c_sim[0]) + '/' + str(list_len_al[0]) + '=' + str(list_sim_align[0])+ '%')    
+                                                               st.write('Drosocin peptide is: ' + str(list_c_sim[1]) + '/' + str(list_len_al[1]) + '=' + str(list_sim_align[1])+ '%')
+                                                               st.write('Spaetzle peptide is: ' + str(list_c_sim[2]) + '/' + str(list_len_al[2]) + '=' + str(list_sim_align[2])+ '%')
+                                                               st.write('B-RAF peptide is: ' + str(list_c_sim[3]) + '/' + str(list_len_al[3]) + '=' + str(list_sim_align[3])+ '%')
+                                                               st.write('Hemoglobin peptide is: '+ str(list_c_sim[4]) + '/' + str(list_len_al[4]) + '=' + str(list_sim_align[4])+ '%')
+                                                               st.write('Keratin peptide is: '+ str(list_c_sim[5]) + '/' + str(list_len_al[5]) + '=' + str(list_sim_align[5])+ '%')
+                                                       # with st.expander("Identity"):
+                                                       #     st.info('The identity of your peptide compare identity with another peptide.')
+                                                       # list_sim_align,  list_iden_align, list_gaps_align = align_sequences(Sequence) 
+                                                           with ff04:
+                                                               Ideal_Feature = '<div align="center"><p style="font-family:; color:#1F3D7C; font-size: 18px; background-color: #C2DFFF;">Identity Comparison</p>'
+                                                               st.markdown(Ideal_Feature, unsafe_allow_html=True)
+   
+                                                               st.write('Defensin peptide is: ' + str(list_matches[0]) + '/' + str(list_len_al[0]) + '=' +  str(list_iden_align[0])+ '%')    
+                                                               st.write('Drosocin peptide is: ' + str(list_matches[1]) + '/' + str(list_len_al[1]) + '=' +  str(list_iden_align[1])+ '%')
+                                                               st.write('Spaetzle peptide is: ' + str(list_matches[2]) + '/' + str(list_len_al[2]) + '=' +  str(list_iden_align[2])+ '%')
+                                                               st.write('B-RAF peptide is: ' + str(list_matches[3]) + '/' + str(list_len_al[3]) + '=' +  str(list_iden_align[3])+ '%')
+                                                               st.write('Hemoglobin peptide is: ' + str(list_matches[4]) + '/' + str(list_len_al[4]) + '=' +  str(list_iden_align[4])+ '%')
+                                                               st.write('Keratin peptide is: ' + str(list_matches[5]) + '/' + str(list_len_al[5]) + '=' +  str(list_iden_align[5])+ '%')
+                                                               
+                                                       # with st.expander("Gaps"):
+                                                       #     st.info('The gaps of your peptide compare gaps with another peptide.')
+                                                       # # list_sim_align,  list_iden_align, list_gaps_align = align_sequences(Sequence)
+                                                           with ff06:
+                                                               Ideal_Feature = '<div align="center"><p style="font-family:; color:#1F3D7C; font-size: 18px; background-color: #C2DFFF;">Gaps Comparison</p>'
+                                                               st.markdown(Ideal_Feature, unsafe_allow_html=True) 
+   
+                                                               st.write('Defensin peptide is: ' + str(list_gaps_al[0]) + '/' + str(list_len_al[0]) + '=' +  str(list_gaps_align[0])+ '%')    
+                                                               st.write('Drosocin peptide is: ' + str(list_gaps_al[1]) + '/' + str(list_len_al[1]) + '=' +  str(list_gaps_align[1])+ '%')
+                                                               st.write('Spaetzle peptide is: ' + str(list_gaps_al[2]) + '/' + str(list_len_al[2]) + '=' +  str(list_gaps_align[2])+ '%')
+                                                               st.write('B-RAF peptide is: ' + str(list_gaps_al[3]) + '/' + str(list_len_al[3]) + '=' +  str(list_gaps_align[3])+ '%')
+                                                               st.write('Hemoglobin peptide is: ' + str(list_gaps_al[4]) + '/' + str(list_len_al[4]) + '=' +  str(list_gaps_align[4])+ '%')
+                                                               st.write('Keratin peptide is: ' + str(list_gaps_al[5]) + '/' + str(list_len_al[5]) + '=' +  str(list_gaps_align[5])+ '%')
+   
+                                                       # Graph show amino acid ---------------------------------------------------------------
+                                                       c1,c2,c3 = st.columns((4,10,4))
+                                                       with c2:
+                                                           num_R = df_user_name_seq['Sequence'][i].count('R')
+                                                           num_N = df_user_name_seq['Sequence'][i].count('N')
+                                                           num_D = df_user_name_seq['Sequence'][i].count('D')
+                                                           num_Q = df_user_name_seq['Sequence'][i].count('Q')
+                                                           num_E = df_user_name_seq['Sequence'][i].count('E')
+                                                           num_K = df_user_name_seq['Sequence'][i].count('K')
+   
+                                                           num_H = df_user_name_seq['Sequence'][i].count('H')
+                                                           num_S = df_user_name_seq['Sequence'][i].count('S')
+                                                           num_T = df_user_name_seq['Sequence'][i].count('T')
+                                                           num_A = df_user_name_seq['Sequence'][i].count('A')
+                                                           num_C = df_user_name_seq['Sequence'][i].count('C')
+                                                           num_F = df_user_name_seq['Sequence'][i].count('F')
+                                                           num_G = df_user_name_seq['Sequence'][i].count('G')
+                                                           num_I = df_user_name_seq['Sequence'][i].count('I')
+                                                           num_L = df_user_name_seq['Sequence'][i].count('L')
+                                                           num_M = df_user_name_seq['Sequence'][i].count('M')
+                                                           num_P = df_user_name_seq['Sequence'][i].count('P')
+                                                           num_V = df_user_name_seq['Sequence'][i].count('V')
+                                                           num_W = df_user_name_seq['Sequence'][i].count('W')
+                                                           num_Y = df_user_name_seq['Sequence'][i].count('Y')
+   
+                                                           df = pd.DataFrame(
+                                                           dict(
+                                                               hi_ = [num_R, num_N, num_D, num_Q, num_E, num_K, num_H, num_S, num_T, num_A, num_C, num_F, num_G, num_I, num_L, num_M, num_P, num_V, num_W, num_Y],
+                                                               bar_labels = ['R','N','D','Q','E', 'K', 'H', 'S', 'T', 'A', 'C', 'F', 'G', 'I', 'L', 'M', 'P', 'V', 'W', 'Y']
+                                                           )
+                                                           )
+                                                           
+   
+                                                           df_sorted = df.sort_values('hi_', ascending=False)
+                                                                                                   
+                                                           # def check_freq(x):
+                                                           #     freq = {}
+                                                           #     for c in set(x):
+                                                           #         freq[c] = x.count(c)
+                                                           #     return freq
+   
+                                                           # freq = check_freq(df_user_name_seq['Sequence'][i])
+                                                           # st.write(type(freq))
+                                                           # df1 = pd.DataFrame(list(freq.items())).T
+                                                           # df1.columns = df1.iloc[0]
+                                                                                                       
+                                                           # st.dataframe(df1)
+                                                           font = {'size': 4}
+                                                           # using rc function
+                                                           plt.rc('font', **font)
+                                                           f, ax = plt.subplots(figsize=(3,1))                                          
+                                                           plt.xlabel('amino acid numbers', fontsize=4)
+                                                           plt.ylabel('amino acid', fontsize=4)
+                                                           plt.title("Amino acid counting diagram", fontsize=5)
+                                                           plt.bar('bar_labels', 'hi_', data= df_sorted, color='#1F3D7C')
+                                                           
+                                                       
+                                                           st.pyplot(plt)
+      
+                                               st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+                                                                                                   
+                                           # show Dataframe of predict your peptide----------------------------------------------------------------------------------  
+                                           df_user_name_seq['Predict_Peptide'] = anti_or_non
+                                           df_user_name_seq['Probability_Peptide'] = probs_anti_or_non_list
+                                           df_user_name_seq['Resist_Gram'] = pos_ro_nec
+                                           df_user_name_seq['Probability_Negative'] = probs_nec_list
+                                           df_user_name_seq['Probability_Positive'] = probs_poe_list
+                                          
 
-                                        final_data = pd.concat([df_user_name_seq, df_use_in_model], axis=1)
-                                        final_data = np.round(final_data, decimals = 5)
+                                           final_data = pd.concat([df_user_name_seq, df_use_in_model], axis=1)
+                                           final_data = np.round(final_data, decimals = 5)
+                                        time.sleep(1)
+                                        my_bar.empty()
                                         if len(final_data) != 0:
                                             html_temp = """
                                                                 <div style="background-color:{};height:{};width:{};">
