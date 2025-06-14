@@ -975,7 +975,8 @@ class PredictApp(HydraHeadApp):
                                                         st.pyplot(plt)
                                                     
                                             st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-                                                                                                
+                                        time.sleep(1)
+                                        my_bar.empty()                                                           
                                         # show Dataframe of predict your peptide----------------------------------------------------------------------------------  
                                         df_user_name_seq['Predict_Peptide'] = anti_or_non
                                         df_user_name_seq['Probability_Peptide'] = probs_anti_or_non_list
@@ -1030,6 +1031,8 @@ class PredictApp(HydraHeadApp):
                                         for i in range(len(df_ant_non_normed)):
                                             my_bar.progress((i*100)/len(df_use_in_model), text=progress_text)
                                             anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list = use_model(df_ant_non_normed.iloc[[i]], df_pos_nec_normed.iloc[[i]])
+                                        time.sleep(1)
+                                        my_bar.empty()   
                                         # show Dataframe of predict your peptide----------------------------------------------------------------------------------  
                                         df_user_name_seq['Predict_Peptide'] = anti_or_non
                                         df_user_name_seq['Probability_Peptide'] = probs_anti_or_non_list
@@ -1081,10 +1084,7 @@ class PredictApp(HydraHeadApp):
                                                 div.stButton > button:first-child {
                                                     background-color: #C2DFFF;
                                                 }
-                                                </style>""", unsafe_allow_html=True)
-
-                                time.sleep(1)
-                                my_bar.empty()    
+                                                </style>""", unsafe_allow_html=True) 
                     except:
                         # except Exception as e:
                         # st.error("❌ Failed to load model_anti_or_non")
