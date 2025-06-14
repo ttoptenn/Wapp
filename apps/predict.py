@@ -147,15 +147,6 @@ class PredictApp(HydraHeadApp):
 
                     # st.write('You selected:', option_gram)
                     # st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-
-                progress_text = "Operation in progress. Please wait."
-                my_bar = st.progress(0, text=progress_text)
-                
-                for percent_complete in range(100):
-                    time.sleep(0.01)
-                    my_bar.progress(percent_complete + 1, text=progress_text)
-                time.sleep(1)
-                my_bar.empty()
                 
                 cl001, ddd,cl002,cl003, cl004 = st.columns((0.95,3.8,2.5,4,16))  
                 if cl002.button("🦠 Predict"):
@@ -262,7 +253,15 @@ class PredictApp(HydraHeadApp):
                                     list2.append(seq[i])                              
 
                             df_user_name_seq = pd.DataFrame(list(zip(list1,list2)),columns =['Name','Sequence'])
-                                    
+                            progress_text = "Operation in progress. Please wait."
+                            my_bar = st.progress(0, text=progress_text)
+                            
+                            for percent_complete in range(100):
+                                time.sleep(0.01)
+                                my_bar.progress(percent_complete/len(df_user_name_seq), text=progress_text)
+                            time.sleep(1)
+                            my_bar.empty()
+                         
                             def CalRasidal(smi):
                                 A = smi.count('A')
                                 V = smi.count('V')
