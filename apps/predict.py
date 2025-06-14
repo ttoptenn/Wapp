@@ -521,11 +521,12 @@ class PredictApp(HydraHeadApp):
                                 return df_use_in_model
                             # function model for predict peptide ---------------------------------------------------------------- 
                             def use_model(data_user_features_user_in_model, data_user_nec_pos_in_model):
+                                progress_text = "Operation in progress. Please wait."
+                                my_bar = st.progress(0, text=progress_text)
                                 
                                 for percent_complete in range(100):
                                     time.sleep(0.01)
-                                    my_bar.progress(percent_complete*100/len(data_user_features_user_in_model), text=progress_text)
-                                                    
+                                    my_bar.progress(percent_complete*100/len(df_use_in_model), text=progress_text)
                                     # list_test_nom = data_user_features_user_in_model.values.tolist()
                                     # predictions_anti_or_non = model_anti_or_non.predict(data_user_features_user_in_model)
                                     real_probs_anti_or_non = model_anti_or_non.predict_proba(data_user_features_user_in_model)[0]
@@ -576,7 +577,7 @@ class PredictApp(HydraHeadApp):
                                             # st.subheader('❌ Your peptide is non antimicrobial peptide.')
                                             # st.text('Probability is '+ str((probs_anti_or_non)[0]))
                                 time.sleep(1)
-                                my_bar.empty()                                        
+                                my_bar.empty()                                    
                                 return anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list
         
                             len_list = []                        
@@ -658,8 +659,7 @@ class PredictApp(HydraHeadApp):
                                         
                                 # <h1 style="color:{};text-align:center;">Dataframe of predict your peptide</h1>
                                 l_col1, l_col2, lasti = st.columns((0.60,12,0.6))
-                                progress_text = "Operation in progress. Please wait."
-                                my_bar = st.progress(0, text=progress_text)
+                                
                                 with l_col2:
                                     if len(df_ant_non_normed) <= 50:
                                         for i in range(len(df_ant_non_normed)):                                   
@@ -695,11 +695,7 @@ class PredictApp(HydraHeadApp):
                                             with cc2: 
                                                 # st.write("##")
                                                 # st.markdown(html_temp.format('white','2px', '60%','#1F3D7C','#FFFFFF'),unsafe_allow_html=True)
-                                                progress_text = "Operation in progress. Please wait."
-                                                my_bar = st.progress(0, text=progress_text)
-                                                for percent_complete in range(100):
-                                                    time.sleep(0.01)
-                                                    my_bar.progress(percent_complete/len(df_use_in_model), text=progress_text)
+
                                                 anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list = use_model(df_ant_non_normed.iloc[[i]], df_pos_nec_normed.iloc[[i]])
                                                 
                                                 if anti_or_non[i] == 'antimicrobial':
