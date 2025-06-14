@@ -23,7 +23,7 @@ from pathlib import Path
 from io import StringIO
 import seaborn as sns
 from time import sleep
-from stqdm 
+import stqdm 
 try:
     from Bio import pairwise2
     from Bio.SubsMat import MatrixInfo as matlist
