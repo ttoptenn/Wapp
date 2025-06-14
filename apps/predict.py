@@ -609,7 +609,6 @@ class PredictApp(HydraHeadApp):
                             total = len(df_user_name_seq)
                             # ------------------------------------------------------------------------------
                             for i in df_user_name_seq['Sequence']:
-
                                 len_list.append(len(i))
 
                                 hydrophobic, hydrophilic, uncharged, positiveC, NegativeC, MW = CalRasidal(i)
@@ -635,8 +634,17 @@ class PredictApp(HydraHeadApp):
                                 similarity_hemoglobin.append(list_sim_align[4])
                                 similarity_keratin.append(list_sim_align[5])
                                                         
-                            df_use_in_model = all_data_user(len_list, hydrophobic_list, hydrophilic_list, uncharged_list, positive_charge_list, Negative_charge_list, Molecular_Weight_list, pI_list, score_hydrophilic_list, Score_hydrophobic_list, similarity_Betadefensin, similarity_Drosocin, similarity_Spaetzle, similarity_BRAF, similarity_hemoglobin, similarity_keratin)
+                                progress_text = "Operation in progress. Please wait."
+                                my_bar = st.progress(0, text=progress_text)
+                                
+                            for percent_complete in range(100):
+                                time.sleep(0.01)
+                                my_bar.progress(percent_complete/len(df_use_in_model), text=progress_text)
+             
+                                df_use_in_model = all_data_user(len_list, hydrophobic_list, hydrophilic_list, uncharged_list, positive_charge_list, Negative_charge_list, Molecular_Weight_list, pI_list, score_hydrophilic_list, Score_hydrophobic_list, similarity_Betadefensin, similarity_Drosocin, similarity_Spaetzle, similarity_BRAF, similarity_hemoglobin, similarity_keratin)
                             
+                            time.sleep(1)
+                            my_bar.empty()
                             list_mean_ant_non = [95.98, 41.4, 33.1, 16.49, 20.49, 7.91, 10804.93, 8.79, 0.09, 0.12, 5.17, 5.03, 3.44, 5.57, 6.63, 4.41]
                             list_std_ant_non = [108.19, 11.88, 11.91, 9.65, 12.68, 7.25, 12119.58, 2.72, 0.46, 0.36, 5.08, 4.26, 3.67, 4.46, 5.05, 4.68]
 
@@ -653,14 +661,10 @@ class PredictApp(HydraHeadApp):
                                 # <h1 style="color:{};text-align:center;">Dataframe of predict your peptide</h1>
                                 l_col1, l_col2, lasti = st.columns((0.60,12,0.6))
                                 
-                                progress_text = "Operation in progress. Please wait."
-                                my_bar = st.progress(0, text=progress_text)
-                                
                                 with l_col2:
                                     if len(df_ant_non_normed) <= 50:
                                         for i in range(len(df_ant_non_normed)):                                   
-                                            time.sleep(0.01)
-                                            my_bar.progress(100*i/len(df_use_in_model), text=progress_text)
+                                        
                                             with open('style2.css') as f:
                                                 with st.expander('Describe detail information'):
                                                     st.info(
@@ -975,8 +979,7 @@ class PredictApp(HydraHeadApp):
                                                         st.pyplot(plt)
                                                     
                                             st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-                                        time.sleep(1)
-                                        my_bar.empty()                                                           
+                                                                                                
                                         # show Dataframe of predict your peptide----------------------------------------------------------------------------------  
                                         df_user_name_seq['Predict_Peptide'] = anti_or_non
                                         df_user_name_seq['Probability_Peptide'] = probs_anti_or_non_list
@@ -1028,11 +1031,8 @@ class PredictApp(HydraHeadApp):
                                                     }
                                                     </style>""", unsafe_allow_html=True)
                                     elif len(df_ant_non_normed) > 50 :
-                                        for i in range(len(df_ant_non_normed)):
-                                            my_bar.progress(100*i/len(df_use_in_model), text=progress_text)
+                                        for i in range(len(df_ant_non_normed)):   
                                             anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list = use_model(df_ant_non_normed.iloc[[i]], df_pos_nec_normed.iloc[[i]])
-                                        time.sleep(1)
-                                        my_bar.empty()   
                                         # show Dataframe of predict your peptide----------------------------------------------------------------------------------  
                                         df_user_name_seq['Predict_Peptide'] = anti_or_non
                                         df_user_name_seq['Probability_Peptide'] = probs_anti_or_non_list
@@ -1084,7 +1084,9 @@ class PredictApp(HydraHeadApp):
                                                 div.stButton > button:first-child {
                                                     background-color: #C2DFFF;
                                                 }
-                                                </style>""", unsafe_allow_html=True) 
+                                                </style>""", unsafe_allow_html=True)
+
+                                    
                     except:
                         # except Exception as e:
                         # st.error("❌ Failed to load model_anti_or_non")
