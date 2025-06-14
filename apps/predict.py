@@ -526,7 +526,7 @@ class PredictApp(HydraHeadApp):
                                 
                                 for percent_complete in range(100):
                                     time.sleep(0.01)
-                                    my_bar.progress(percent_complete*100/len(df_use_in_model), text=progress_text)
+                                    my_bar.progress(percent_complete*100/len(data_user_features_user_in_model), text=progress_text)
                                     # list_test_nom = data_user_features_user_in_model.values.tolist()
                                     # predictions_anti_or_non = model_anti_or_non.predict(data_user_features_user_in_model)
                                     real_probs_anti_or_non = model_anti_or_non.predict_proba(data_user_features_user_in_model)[0]
