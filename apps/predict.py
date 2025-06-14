@@ -22,6 +22,8 @@ import requests
 from pathlib import Path
 from io import StringIO
 import seaborn as sns
+from time import sleep
+from stqdm import stqdm
 try:
     from Bio import pairwise2
     from Bio.SubsMat import MatrixInfo as matlist
@@ -653,16 +655,13 @@ class PredictApp(HydraHeadApp):
                                 # <h1 style="color:{};text-align:center;">Dataframe of predict your peptide</h1>
                                 l_col1, l_col2, lasti = st.columns((0.60,12,0.6))
 
-                                count_progress = 0
-                                progress_text = "Operation in progress. Please wait. (" + count_progress + "/" + len(df_ant_non_normed)+")" + (count_progress/len(df_ant_non_normed))*100
-                                
+
                                 with l_col2:
                                     if len(df_ant_non_normed) <= 50:
                                         for i in range(len(df_ant_non_normed)):
-                                            
-                                            my_bar = st.progress(0, text=progress_text)
-                                            my_bar.progress(count_progress/len(df_ant_non_normed), text=progress_text)
-                                            
+                                            stqdm.pandas()
+                                            pd.Series(range(len(df_ant_non_normed))).progress_map(lambda x: sleep(1))
+                                            pd.Dataframe({"a": range(len(df_ant_non_normed))}).progress_apply(lambda x: sleep(1), axis=1)
                                             with open('style2.css') as f:
                                                 with st.expander('Describe detail information'):
                                                     st.info(
@@ -975,7 +974,7 @@ class PredictApp(HydraHeadApp):
                                                         
                                                     
                                                         st.pyplot(plt)
-                                                count_progress = count_progress + 1        
+   
                                             st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
                                                                                                 
                                         # show Dataframe of predict your peptide----------------------------------------------------------------------------------  
