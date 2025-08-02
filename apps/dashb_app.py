@@ -3,6 +3,8 @@ import hydralit_components as hc
 import codecs
 from hydralit import HydraHeadApp
 import streamlit.components.v1 as stc 
+import base64
+from pathlib import Path
 
 class DashbApp(HydraHeadApp):
 
@@ -20,21 +22,20 @@ class DashbApp(HydraHeadApp):
             page =page_file.read()
             stc.html(page,width=width, height=height , scrolling = False)
         st_webpage('apps/powerBI.html')
+        pdf_path = Path("Handbook for dashboard.pdf")
 
-# === เปิด PDF Handbook เมื่อกดปุ่ม ===
-import base64
-from pathlib import Path
-
-pdf_path = Path("Handbook for dashboard.pdf")
-
-if pdf_path.exists():
-    if st.button("👁️ ดู Handbook for dashboard"):
-        with open(pdf_path, "rb") as f:
-            base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-        pdf_display = f"""
-        <iframe src="data:application/pdf;base64,{base64_pdf}" width="800" height="1000" type="application/pdf"></iframe>
-        """
-        st.markdown("### 📑 Preview:")
-        st.markdown(pdf_display, unsafe_allow_html=True)
-else:
-    st.warning("ไม่พบไฟล์ Handbook for dashboard.pdf ในโฟลเดอร์ปัจจุบัน")
+        if pdf_path.exists():
+            if st.button("👁️ ดู Handbook for dashboard"):
+                with open(pdf_path, "rb") as f:
+                    base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+    
+                pdf_display = f"""
+                    <iframe src="data:application/pdf;base64,{base64_pdf}" width="800" height="1000" type="application/pdf"></iframe>
+                """
+                st.markdown("### 📑 Preview Handbook")
+                st.markdown(pdf_display, unsafe_allow_html=True)
+        else:
+            st.warning("ไม่พบไฟล์ Handbook for dashboard.pdf")
+        
+        
+        
