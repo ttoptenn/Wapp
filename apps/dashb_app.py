@@ -3,7 +3,15 @@ import hydralit_components as hc
 import codecs
 from hydralit import HydraHeadApp
 import streamlit.components.v1 as stc 
+import base64
 
+def show_pdf(pdf_file_path):
+    with open(pdf_file_path, "rb") as f:
+        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+        pdf_display = f'''
+            <iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf"></iframe>
+        '''
+        st.markdown(pdf_display, unsafe_allow_html=True)
 class DashbApp(HydraHeadApp):
 
     def __init__(self, title = 'Dashboard', delay=0, **kwargs):
