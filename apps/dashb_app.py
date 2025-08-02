@@ -27,10 +27,8 @@ class DashbApp(HydraHeadApp):
         st.markdown(f'<a href="Handbook for dashboard.pdf" target="_blank">📖 เปิด Handbook ในแท็บใหม่</a>', unsafe_allow_html=True)
         pdf_file = "Handbook for dashboard.pdf"
         
-            st.markdown(
-                f'<a href="{pdf_file}" target="_blank">📖 เปิด Handbook ในแท็บใหม่</a>',
-                unsafe_allow_html=True
-            )
+        st.markdown(f'<a href="{pdf_file}" target="_blank">📖 เปิด Handbook ในแท็บใหม่</a>',
+                unsafe_allow_html=True)
         
-            with open(pdf_file, "rb") as f:
-                st.download_button("📥 ดาวน์โหลด Handbook", f, file_name="Handbook for dashboard.pdf")
+        with open(pdf_file, "rb") as f:
+            st.download_button("📥 ดาวน์โหลด Handbook", f, file_name="Handbook for dashboard.pdf")
