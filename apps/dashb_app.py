@@ -22,7 +22,7 @@ class DashbApp(HydraHeadApp):
             page =page_file.read()
             stc.html(page,width=width, height=height , scrolling = False)
         st_webpage('apps/powerBI.html')
-        pdf_path = Path("Handbook for dashboard.pdf")
+        pdf_path = Path("apps/Handbook for dashboard.pdf")
 
         if pdf_path.exists():
             if st.button("👁️ ดู Handbook for dashboard"):
