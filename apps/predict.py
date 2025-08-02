@@ -616,9 +616,9 @@ class PredictApp(HydraHeadApp):
                             total = len(df_user_name_seq)
                             # ------------------------------------------------------------------------------
                             for i in df_user_name_seq['Sequence']:
-
+                            for idx, i in enumerate(df_user_name_seq['Sequence']):
+                                # เพิ่มข้อมูลลง list ต่าง ๆ
                                 len_list.append(len(i))
-
                                 hydrophobic, hydrophilic, uncharged, positiveC, NegativeC, MW = CalRasidal(i)
                                 hydrophobic_list.append(hydrophobic)
                                 hydrophilic_list.append(hydrophilic)
@@ -626,14 +626,14 @@ class PredictApp(HydraHeadApp):
                                 positive_charge_list.append(positiveC)
                                 Negative_charge_list.append(NegativeC)
                                 Molecular_Weight_list.append(MW)
-
+                            
                                 pI_pi = CalpI(i)
                                 pI_list.append(pI_pi)
-
+                            
                                 score_hydrophilic, Score_hydrophobic = Phipho(i)
                                 score_hydrophilic_list.append(score_hydrophilic)
                                 Score_hydrophobic_list.append(Score_hydrophobic)
-                                        
+                            
                                 list_sim_align, list_iden_align, list_gaps_align, list_c_sim, list_matches, list_gaps_al, list_len_al = align_sequences(i)
                                 similarity_Betadefensin.append(list_sim_align[0])
                                 similarity_Drosocin.append(list_sim_align[1])
@@ -641,6 +641,12 @@ class PredictApp(HydraHeadApp):
                                 similarity_BRAF.append(list_sim_align[3])
                                 similarity_hemoglobin.append(list_sim_align[4])
                                 similarity_keratin.append(list_sim_align[5])
+                            
+                                # อัปเดต progress bar
+                                progress_bar.progress((idx + 1) / total)
+                                status_text.text(f"🔬 Processing peptide {idx + 1} of {total}")
+
+
                                                         
                             df_use_in_model = all_data_user(len_list, hydrophobic_list, hydrophilic_list, uncharged_list, positive_charge_list, Negative_charge_list, Molecular_Weight_list, pI_list, score_hydrophilic_list, Score_hydrophobic_list, similarity_Betadefensin, similarity_Drosocin, similarity_Spaetzle, similarity_BRAF, similarity_hemoglobin, similarity_keratin)
                             
