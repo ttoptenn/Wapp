@@ -604,9 +604,9 @@ class PredictApp(HydraHeadApp):
                                 </style>
                             """, unsafe_allow_html=True)
                             # ---- progress bar --------------------------------------------------------------
-                            progress_bar = st.progress(0)
-                            status_text = st.empty()
-                            total = len(df_user_name_seq)
+                            # progress_bar = st.progress(0)
+                            # status_text = st.empty()
+                            # total = len(df_user_name_seq)
                             # ------------------------------------------------------------------------------
                             for i in df_user_name_seq['Sequence']:
 
