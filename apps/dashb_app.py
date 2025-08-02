@@ -4,14 +4,18 @@ import codecs
 from hydralit import HydraHeadApp
 import streamlit.components.v1 as stc 
 import base64
+import pdfplumber
 
-def show_pdf(pdf_file_path):
-    with open(pdf_file_path, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-        pdf_display = f'''
-            <iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf"></iframe>
-        '''
-        st.markdown(pdf_display, unsafe_allow_html=True)
+def extract_text_from_pdf(file):
+    with pdfplumber.open(file) as pdf:
+        return "\n".join([page.extract_text() or "" for page in pdf.pages])
+
+
+
+if uploaded is not None:
+    if st.button("👁️ แสดงเนื้อหา PDF"):
+        text = extract_text_from_pdf(uploaded)
+        st.text_area("📄 เนื้อหา PDF", text, height=600)
 class DashbApp(HydraHeadApp):
 
     def __init__(self, title = 'Dashboard', delay=0, **kwargs):
@@ -28,7 +32,7 @@ class DashbApp(HydraHeadApp):
             page =page_file.read()
             stc.html(page,width=width, height=height , scrolling = False)
         st_webpage('apps/powerBI.html')
-        st.download_button("⬇️ ดาวน์โหลด PDF", data=uploaded.read(), file_name="Handbook for dashboard.pdf")
+        uploaded = st.file_uploader("📎 Upload PDF", type="pdf")
         
         
         
