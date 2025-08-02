@@ -610,15 +610,15 @@ class PredictApp(HydraHeadApp):
                                 }
                                 </style>
                             """, unsafe_allow_html=True)
-                            # ---- progress bar --------------------------------------------------------------
+                           # ส่วนเสริมสำหรับ Progress Bar
                             progress_bar = st.progress(0)
                             status_text = st.empty()
                             total = len(df_user_name_seq)
-                            # ------------------------------------------------------------------------------
-                            for i in df_user_name_seq['Sequence']:
+                            
+                            # วนลูปประมวลผลแต่ละ sequence พร้อมแสดง progress bar
                             for idx, i in enumerate(df_user_name_seq['Sequence']):
-                                # เพิ่มข้อมูลลง list ต่าง ๆ
                                 len_list.append(len(i))
+                            
                                 hydrophobic, hydrophilic, uncharged, positiveC, NegativeC, MW = CalRasidal(i)
                                 hydrophobic_list.append(hydrophobic)
                                 hydrophilic_list.append(hydrophilic)
@@ -645,6 +645,11 @@ class PredictApp(HydraHeadApp):
                                 # อัปเดต progress bar
                                 progress_bar.progress((idx + 1) / total)
                                 status_text.text(f"🔬 Processing peptide {idx + 1} of {total}")
+                            
+                            # ซ่อน progress bar หลังจากเสร็จสิ้น
+                            progress_bar.empty()
+                            status_text.empty()
+
 
 
                                                         
