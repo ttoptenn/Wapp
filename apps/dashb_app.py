@@ -24,7 +24,7 @@ class DashbApp(HydraHeadApp):
         st_webpage('apps/powerBI.html')
         
         pdf_path = Path("apps/Handbook for dashboard.pdf")
-        
+        st.markdown(f'<a href="Handbook for dashboard.pdf" target="_blank">📖 เปิด Handbook ในแท็บใหม่</a>', unsafe_allow_html=True)
         if pdf_path.exists():
             with open(pdf_path, "rb") as f:
                 base64_pdf = base64.b64encode(f.read()).decode('utf-8')
