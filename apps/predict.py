@@ -653,14 +653,10 @@ class PredictApp(HydraHeadApp):
                                 # <h1 style="color:{};text-align:center;">Dataframe of predict your peptide</h1>
                                 l_col1, l_col2, lasti = st.columns((0.60,12,0.6))
                                 
-                                count_progress = 0
-                                progress_text = "Operation in progress. Please wait. (" + count_progress + "/" + len(df_ant_non_normed)+")" + (count_progress/len(df_ant_non_normed))*100
-
                                 with l_col2:
                                     if len(df_ant_non_normed) <= 50:
-                                        for i in range(len(df_ant_non_normed)):
-                                                my_bar = st.progress(0, text=progress_text)
-                                                my_bar.progress(count_progress + 1, text=progress_text)
+                                        for i in range(len(df_ant_non_normed)):                                   
+                                        
                                             with open('style2.css') as f:
                                                 with st.expander('Describe detail information'):
                                                     st.info(
@@ -973,8 +969,6 @@ class PredictApp(HydraHeadApp):
                                                         
                                                     
                                                         st.pyplot(plt)
-                                            count_progress = count_progress + 1
-
                                                     
                                             st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
                                                                                                 
