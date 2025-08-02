@@ -10,7 +10,7 @@ class DashbApp(HydraHeadApp):
         # self.__dict__.update(kwargs)
         self.title = title
         # self.delay = delay
-
+    
     def run(self):
         st.title("Dashboard for data set")
                 #### import html ####
@@ -20,7 +20,10 @@ class DashbApp(HydraHeadApp):
             page =page_file.read()
             stc.html(page,width=width, height=height , scrolling = False)
         st_webpage('apps/powerBI.html')
-        
+        st.title("📊 Dashboard for data set")
+
+        if st.button("📄 ดูรายงาน PDF"):
+            show_pdf("apps/Handbook for dashboard.pdf") 
         
         
         
