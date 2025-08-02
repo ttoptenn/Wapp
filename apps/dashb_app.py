@@ -28,10 +28,7 @@ class DashbApp(HydraHeadApp):
             page =page_file.read()
             stc.html(page,width=width, height=height , scrolling = False)
         st_webpage('apps/powerBI.html')
-        st.title("📊 Dashboard for data set")
-
-        if st.button("📄 ดูรายงาน PDF"):
-            show_pdf("apps/Handbook for dashboard.pdf") 
+        st.download_button("⬇️ ดาวน์โหลด PDF", data=uploaded.read(), file_name="Handbook for dashboard.pdf")
         
         
         
