@@ -521,63 +521,56 @@ class PredictApp(HydraHeadApp):
                                 return df_use_in_model
                             # function model for predict peptide ---------------------------------------------------------------- 
                             def use_model(data_user_features_user_in_model, data_user_nec_pos_in_model):
-                                progress_text = "Operation in progress. Please wait."
-                                my_bar = st.progress(0, text=progress_text)
-                                
-                                for percent_complete in range(100):
-                                    time.sleep(0.01)
-                                    my_bar.progress(percent_complete*100/len(data_user_features_user_in_model), text=progress_text)
-                                    # list_test_nom = data_user_features_user_in_model.values.tolist()
-                                    # predictions_anti_or_non = model_anti_or_non.predict(data_user_features_user_in_model)
-                                    real_probs_anti_or_non = model_anti_or_non.predict_proba(data_user_features_user_in_model)[0]
-                                    # predictions_nec = model_angram_negative.predict(data_user_nec_pos_in_model)
-                                    real_probs_nec = model_angram_negative.predict_proba(data_user_nec_pos_in_model)[0]
-                                    # predictions_pos = model_angram_post.predict(data_user_nec_pos_in_model)
-                                    real_probs_pos = model_angram_post.predict_proba(data_user_nec_pos_in_model)[0]
-                                    probs_anti_or_non = [np.round(x,5) for x in real_probs_anti_or_non]
-                                    probs_nec = [np.round(x,5) for x in real_probs_nec]
-                                    probs_pos = [np.round(x,5) for x in real_probs_pos]                                                               
-                                    if probs_anti_or_non[1] >= (int(option_anti)/100):                                        
-                                        anti_or_non.append('antimicrobial')                               
-                                        probs_anti_or_non_list.append(probs_anti_or_non[1]) 
-                                        # st.subheader('✔️ Your peptide is an antimicrobial peptide.')
-                                        # st.text('Probability is '+ str((probs_anti_or_non)[1]))
-                                        if (probs_pos[1] >= (int(option_gram)/100)) and (real_probs_nec[1] >= (int(option_gram)/100)):
-                                                # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
-                                                # st.text('Probability is '+ str((probs_pos)[1]))
-                                                # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.')
-                                                # st.text('Probability is '+ str((probs_nec)[1]))
-                                            pos_ro_nec.append('gram+,gram-')
-                                            probs_nec_list.append(probs_pos[1]) 
-                                            probs_poe_list.append(probs_nec[1])
-                                        elif (real_probs_pos[1] >= (int(option_gram)/100)) and (real_probs_nec[1] < (int(option_gram)/100)):
+                                # list_test_nom = data_user_features_user_in_model.values.tolist()
+                                # predictions_anti_or_non = model_anti_or_non.predict(data_user_features_user_in_model)
+                                real_probs_anti_or_non = model_anti_or_non.predict_proba(data_user_features_user_in_model)[0]
+                                # predictions_nec = model_angram_negative.predict(data_user_nec_pos_in_model)
+                                real_probs_nec = model_angram_negative.predict_proba(data_user_nec_pos_in_model)[0]
+                                # predictions_pos = model_angram_post.predict(data_user_nec_pos_in_model)
+                                real_probs_pos = model_angram_post.predict_proba(data_user_nec_pos_in_model)[0]
+                                probs_anti_or_non = [np.round(x,5) for x in real_probs_anti_or_non]
+                                probs_nec = [np.round(x,5) for x in real_probs_nec]
+                                probs_pos = [np.round(x,5) for x in real_probs_pos]                                                               
+                                if probs_anti_or_non[1] >= (int(option_anti)/100):                                        
+                                    anti_or_non.append('antimicrobial')                               
+                                    probs_anti_or_non_list.append(probs_anti_or_non[1]) 
+                                    # st.subheader('✔️ Your peptide is an antimicrobial peptide.')
+                                    # st.text('Probability is '+ str((probs_anti_or_non)[1]))
+                                    if (probs_pos[1] >= (int(option_gram)/100)) and (real_probs_nec[1] >= (int(option_gram)/100)):
                                             # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
                                             # st.text('Probability is '+ str((probs_pos)[1]))
-                                            pos_ro_nec.append('gram+') 
-                                            probs_poe_list.append((probs_pos)[1])
-                                            probs_nec_list.append('-')
-                                        elif (real_probs_pos[1] < (int(option_gram)/100)) and (real_probs_nec[1] >= (int(option_gram)/100)):
-                                                # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.' )
-                                                # st.text('Probability is '+ str((probs_nec)[1]))
-                                            pos_ro_nec.append('gram-')
-                                            probs_poe_list.append('-')   
-                                            probs_nec_list.append((probs_nec)[1])   
-                                        elif (real_probs_pos[1] < (int(option_gram)/100)) and (real_probs_nec[1] < (int(option_gram)/100)):
-                                                # st.success(' 󠀠 󠀠✔️ 󠀠 Resist other gram of bacteria.')
-                                            pos_ro_nec.append('other gram')
-                                            probs_nec_list.append((probs_nec)[1]) 
-                                            probs_poe_list.append((probs_pos)[1])                                                                                
-                                            
-                                    elif real_probs_anti_or_non[1] < (int(option_anti)/100):                                        
-                                        anti_or_non.append('non antimicrobial')
-                                        pos_ro_nec.append("-")
-                                        probs_anti_or_non_list.append(probs_anti_or_non[1])
-                                        probs_nec_list.append('-') 
-                                        probs_poe_list.append('-')
-                                            # st.subheader('❌ Your peptide is non antimicrobial peptide.')
-                                            # st.text('Probability is '+ str((probs_anti_or_non)[0]))
-                                time.sleep(1)
-                                my_bar.empty()                                    
+                                            # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.')
+                                            # st.text('Probability is '+ str((probs_nec)[1]))
+                                        pos_ro_nec.append('gram+,gram-')
+                                        probs_nec_list.append(probs_pos[1]) 
+                                        probs_poe_list.append(probs_nec[1])
+                                    elif (real_probs_pos[1] >= (int(option_gram)/100)) and (real_probs_nec[1] < (int(option_gram)/100)):
+                                        # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-positive ✚ bacteria.')
+                                        # st.text('Probability is '+ str((probs_pos)[1]))
+                                        pos_ro_nec.append('gram+') 
+                                        probs_poe_list.append((probs_pos)[1])
+                                        probs_nec_list.append('-')
+                                    elif (real_probs_pos[1] < (int(option_gram)/100)) and (real_probs_nec[1] >= (int(option_gram)/100)):
+                                            # st.success(' 󠀠 󠀠✔️ 󠀠 Resist gram-negative ▬ bacteria.' )
+                                            # st.text('Probability is '+ str((probs_nec)[1]))
+                                        pos_ro_nec.append('gram-')
+                                        probs_poe_list.append('-')   
+                                        probs_nec_list.append((probs_nec)[1])   
+                                    elif (real_probs_pos[1] < (int(option_gram)/100)) and (real_probs_nec[1] < (int(option_gram)/100)):
+                                            # st.success(' 󠀠 󠀠✔️ 󠀠 Resist other gram of bacteria.')
+                                        pos_ro_nec.append('other gram')
+                                        probs_nec_list.append((probs_nec)[1]) 
+                                        probs_poe_list.append((probs_pos)[1])                                                                                
+                                        
+                                elif real_probs_anti_or_non[1] < (int(option_anti)/100):                                        
+                                    anti_or_non.append('non antimicrobial')
+                                    pos_ro_nec.append("-")
+                                    probs_anti_or_non_list.append(probs_anti_or_non[1])
+                                    probs_nec_list.append('-') 
+                                    probs_poe_list.append('-')
+                                        # st.subheader('❌ Your peptide is non antimicrobial peptide.')
+                                        # st.text('Probability is '+ str((probs_anti_or_non)[0]))
+                                                                    
                                 return anti_or_non, pos_ro_nec, probs_anti_or_non_list, probs_nec_list, probs_poe_list
         
                             len_list = []                        
@@ -610,15 +603,15 @@ class PredictApp(HydraHeadApp):
                                 }
                                 </style>
                             """, unsafe_allow_html=True)
-                           # ส่วนเสริมสำหรับ Progress Bar
+                            # ---- progress bar --------------------------------------------------------------
                             progress_bar = st.progress(0)
                             status_text = st.empty()
                             total = len(df_user_name_seq)
-                            
-                            # วนลูปประมวลผลแต่ละ sequence พร้อมแสดง progress bar
-                            for idx, i in enumerate(df_user_name_seq['Sequence']):
+                            # ------------------------------------------------------------------------------
+                            for i in df_user_name_seq['Sequence']:
+
                                 len_list.append(len(i))
-                            
+
                                 hydrophobic, hydrophilic, uncharged, positiveC, NegativeC, MW = CalRasidal(i)
                                 hydrophobic_list.append(hydrophobic)
                                 hydrophilic_list.append(hydrophilic)
@@ -626,14 +619,14 @@ class PredictApp(HydraHeadApp):
                                 positive_charge_list.append(positiveC)
                                 Negative_charge_list.append(NegativeC)
                                 Molecular_Weight_list.append(MW)
-                            
+
                                 pI_pi = CalpI(i)
                                 pI_list.append(pI_pi)
-                            
+
                                 score_hydrophilic, Score_hydrophobic = Phipho(i)
                                 score_hydrophilic_list.append(score_hydrophilic)
                                 Score_hydrophobic_list.append(Score_hydrophobic)
-                            
+                                        
                                 list_sim_align, list_iden_align, list_gaps_align, list_c_sim, list_matches, list_gaps_al, list_len_al = align_sequences(i)
                                 similarity_Betadefensin.append(list_sim_align[0])
                                 similarity_Drosocin.append(list_sim_align[1])
@@ -641,17 +634,6 @@ class PredictApp(HydraHeadApp):
                                 similarity_BRAF.append(list_sim_align[3])
                                 similarity_hemoglobin.append(list_sim_align[4])
                                 similarity_keratin.append(list_sim_align[5])
-                            
-                                # อัปเดต progress bar
-                                progress_bar.progress((idx + 1) / total)
-                                status_text.text(f"🔬 Processing peptide {idx + 1} of {total}")
-                            
-                            # ซ่อน progress bar หลังจากเสร็จสิ้น
-                            progress_bar.empty()
-                            status_text.empty()
-
-
-
                                                         
                             df_use_in_model = all_data_user(len_list, hydrophobic_list, hydrophilic_list, uncharged_list, positive_charge_list, Negative_charge_list, Molecular_Weight_list, pI_list, score_hydrophilic_list, Score_hydrophobic_list, similarity_Betadefensin, similarity_Drosocin, similarity_Spaetzle, similarity_BRAF, similarity_hemoglobin, similarity_keratin)
                             
@@ -671,10 +653,14 @@ class PredictApp(HydraHeadApp):
                                 # <h1 style="color:{};text-align:center;">Dataframe of predict your peptide</h1>
                                 l_col1, l_col2, lasti = st.columns((0.60,12,0.6))
                                 
+                                count_progress = 0
+                                progress_text = "Operation in progress. Please wait. (" + count_progress + "/" + len(df_ant_non_normed)+")" + (count_progress/len(df_ant_non_normed))*100
+
                                 with l_col2:
                                     if len(df_ant_non_normed) <= 50:
-                                        for i in range(len(df_ant_non_normed)):                                   
-                                        
+                                        for i in range(len(df_ant_non_normed)):
+                                                my_bar = st.progress(0, text=progress_text)
+                                                my_bar.progress(count_progress + 1, text=progress_text)
                                             with open('style2.css') as f:
                                                 with st.expander('Describe detail information'):
                                                     st.info(
@@ -987,6 +973,8 @@ class PredictApp(HydraHeadApp):
                                                         
                                                     
                                                         st.pyplot(plt)
+                                            count_progress = count_progress + 1
+
                                                     
                                             st.write("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
                                                                                                 
